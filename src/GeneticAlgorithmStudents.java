@@ -3,23 +3,37 @@ import java.util.Random;
 
 public class GeneticAlgorithmStudents {
 
-    private static int[] cargas;
+    private static int quantidadeDeCromossomos;
+    private static int tamanhoDaTurma;
 
-    private static int TAM;
+    private static int[][] preferenciasTurmaA;
+    private static int[][] preferenciasTurmaB;
 
     private static int[][] populacao;
-
     private static int[][] intermediaria;
     //
     public GeneticAlgorithmStudents(){
-        cargas = new int[]{27, 7, 6, 5, 4, 6, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 27, 7, 6, 5, 4, 6, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-        TAM = 11;
+
+        quantidadeDeCromossomos = 10;
+        tamanhoDaTurma = 3;
+        preferenciasTurmaA = new int[tamanhoDaTurma][3];
+        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 2; preferenciasTurmaA [0][2] = 1;
+        preferenciasTurmaA [1][0] = 1; preferenciasTurmaA [1][1] = 0; preferenciasTurmaA [1][2] = 2;
+        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 1; preferenciasTurmaA [2][2] = 0;
+
+        preferenciasTurmaB = new int[tamanhoDaTurma][3];
+        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 2; preferenciasTurmaB [0][2] = 1;
+        preferenciasTurmaB [1][0] = 1; preferenciasTurmaB [1][1] = 0; preferenciasTurmaB [1][2] = 2;
+        preferenciasTurmaB [2][0] = 2; preferenciasTurmaB [2][1] = 1; preferenciasTurmaB [2][2] = 0;
+
+
+
     }
 
     public static void runGenerations() {
         Random rand = new Random();
-        populacao = new int[TAM][cargas.length+1];
-        intermediaria = new int[TAM][cargas.length+1];
+        populacao = new int[quantidadeDeCromossomos][tamanhoDaTurma+1];
+        intermediaria = new int[quantidadeDeCromossomos][tamanhoDaTurma+1];
         int melhor;
 
         //cria a população inicial
@@ -45,8 +59,8 @@ public class GeneticAlgorithmStudents {
     public static void  init() {
         Random rand = new Random();
 
-        for (int i=0; i < TAM; i++) {
-            for (int j=0; j < cargas.length; j++) {
+        for (int i = 0; i < quantidadeDeCromossomos; i++) {
+            for (int j=0; j < tamanhoDaTurma; j++) {
                 populacao[i][j] = rand.nextInt(2);
             }
         }
@@ -54,9 +68,9 @@ public class GeneticAlgorithmStudents {
 
     public static void printMatriz() {
         int j = 0;
-        for (int i=0; i < TAM; i++) {
+        for (int i = 0; i < quantidadeDeCromossomos; i++) {
             System.out.print("C: " + i + " - ");
-            for (j=0; j < cargas.length; j++) {
+            for (j=0; j < tamanhoDaTurma; j++) {
                 System.out.print(populacao[i][j] + " ");
             }
             System.out.println("F: " + populacao[i][j]);
@@ -67,11 +81,11 @@ public class GeneticAlgorithmStudents {
     public static int aptidao(int individuo){
         int somaZero = 0;
         int somaUm = 0;
-        for(int j = 0; j < cargas.length; j++){
+        for(int j = 0; j < tamanhoDaTurma; j++){
             if(populacao[individuo][j] == 0 ){
-                somaZero += cargas[j];
+                //somaZero += cargas[j];
             } else {
-                somaUm += cargas[j];
+                //somaUm += cargas[j];
             }
         }
         return Math.abs(somaZero - somaUm);
@@ -79,21 +93,21 @@ public class GeneticAlgorithmStudents {
     }
 
     public static void calculaAptidao(){
-        for(int i = 0; i < TAM; i++){
-            populacao[i][cargas.length] = aptidao(i);
+        for(int i = 0; i < quantidadeDeCromossomos; i++){
+            populacao[i][tamanhoDaTurma] = aptidao(i);
         }
     }
     public static int getBest(){
-        int min = populacao[0][cargas.length];
+        int min = populacao[0][tamanhoDaTurma];
         int linha = 0;
-        for(int i = 1; i < TAM; i++){
-            if(populacao[i][cargas.length] < min){
-                min = populacao[i][cargas.length];
+        for(int i = 1; i < quantidadeDeCromossomos; i++){
+            if(populacao[i][tamanhoDaTurma] < min){
+                min = populacao[i][tamanhoDaTurma];
                 linha = i;
             }
         }
 
-        for(int i = 0; i < cargas.length; i++)
+        for(int i = 0; i < tamanhoDaTurma; i++)
             intermediaria[0][i] = populacao[linha][i];
 
         return linha;
@@ -103,10 +117,10 @@ public class GeneticAlgorithmStudents {
         Random rand = new Random();
         int individuo1 ,individuo2;
 
-        individuo1 = rand.nextInt(TAM);
-        individuo2 = rand.nextInt(TAM);
+        individuo1 = rand.nextInt(quantidadeDeCromossomos);
+        individuo2 = rand.nextInt(quantidadeDeCromossomos);
 
-        if(populacao[individuo1][cargas.length] < populacao[individuo2][cargas.length])
+        if(populacao[individuo1][tamanhoDaTurma] < populacao[individuo2][tamanhoDaTurma])
             return individuo1;
         else
             return individuo2;
@@ -114,14 +128,14 @@ public class GeneticAlgorithmStudents {
 
     public static void crossover(){
 
-        for (int j=1; j<TAM; j=j+2){
+        for (int j = 1; j< quantidadeDeCromossomos; j=j+2){
             int ind1 = torneio();
             int ind2 = torneio();
-            for (int k=0; k<cargas.length/2; k++){
+            for (int k=0; k<tamanhoDaTurma/2; k++){
                 intermediaria [j][k]= populacao [ind1][k];
                 intermediaria [j+1][k]= populacao [ind2][k];
             }
-            for (int k=cargas.length/2; k<cargas.length; k++){
+            for (int k=tamanhoDaTurma/2; k<tamanhoDaTurma; k++){
                 intermediaria [j][k]= populacao [ind2][k];
                 intermediaria [j+1][k]= populacao [ind1][k];
             }
@@ -133,8 +147,8 @@ public class GeneticAlgorithmStudents {
         Random rand = new Random();
         int quant = rand.nextInt(3)+1;
         for(int i = 0; i<quant; i++){
-            int individuo = rand.nextInt(TAM);
-            int posicao = rand.nextInt(cargas.length);
+            int individuo = rand.nextInt(quantidadeDeCromossomos);
+            int posicao = rand.nextInt(tamanhoDaTurma);
 
             System.out.println("Cromossomo " + individuo + " sofreu mutação na carga de indice " + posicao);
             if(populacao[individuo][posicao]==0) populacao[individuo][posicao]=1;
@@ -144,24 +158,24 @@ public class GeneticAlgorithmStudents {
     }
 
     public static boolean achouSolucao(int melhor){
-        if(populacao[melhor][cargas.length]==0){
+        if(populacao[melhor][tamanhoDaTurma]==0){
             int soma = 0;
             System.out.println("\nAchou a solução ótima. Ela corresponde ao cromossomo :"+ melhor);
             System.out.println("Solução Decodificada: ");
             System.out.println("Pessoa 0: ");
-            for(int i=0; i<cargas.length; i++)
+            for(int i=0; i<tamanhoDaTurma; i++)
                 if(populacao[melhor][i]==0) {
-                    System.out.print(cargas[i]+ " ");
-                    soma = soma + cargas[i];
+                    //System.out.print(tamanhoDaTurma[i]+ " ");
+                    //soma = soma + cargas[i];
                 }
             System.out.println(" - Total: " + soma);
 
             soma = 0;
             System.out.println("Pessoa 1: ");
-            for(int i=0; i<cargas.length; i++)
+            for(int i=0; i<tamanhoDaTurma; i++)
                 if(populacao[melhor][i]==1) {
-                    System.out.print(cargas[i]+ " ");
-                    soma = soma + cargas[i];
+                    //System.out.print(cargas[i]+ " ");
+                    //soma = soma + cargas[i];
                 }
             System.out.println(" - Total: " + soma);
             return true;
