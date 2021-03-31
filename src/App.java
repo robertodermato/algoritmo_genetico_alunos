@@ -3,13 +3,15 @@ import java.util.Scanner;
 
 public class App {
     private final Scanner in = new Scanner(System.in);
-    private GeneticAlgorithm algoritmo1;
+    //private GeneticAlgorithm algoritmo1;
+    private GeneticAlgorithmStudents algoritmo2;
 
     // atributos private aqui
 
     public App() {
         //inicializa atributos
-        algoritmo1 = new GeneticAlgorithm();
+        //algoritmo1 = new GeneticAlgorithm();
+        algoritmo2 = new GeneticAlgorithmStudents();
         readFile();
         fillDataInApp();
     }
@@ -58,7 +60,7 @@ public class App {
     }
 
     private void mostraExecucaoPassoPasso(){
-        algoritmo1.runGenerations();
+        algoritmo2.runGenerations();
     }
 
     private void mostraApenasResultadoFinal(){

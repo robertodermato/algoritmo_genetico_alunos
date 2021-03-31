@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 
@@ -9,13 +11,13 @@ public class GeneticAlgorithmStudents {
     private static int[][] preferenciasTurmaA;
     private static int[][] preferenciasTurmaB;
 
-    private static int[][] populacao;
-    private static int[][] intermediaria;
+    private static Integer[][] populacao;
+    private static Integer[][] intermediaria;
     //
     public GeneticAlgorithmStudents(){
 
-        quantidadeDeCromossomos = 10;
-        tamanhoDaTurma = 3;
+        quantidadeDeCromossomos = 20;
+        tamanhoDaTurma = 6;
         preferenciasTurmaA = new int[tamanhoDaTurma][3];
         preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 2; preferenciasTurmaA [0][2] = 1;
         preferenciasTurmaA [1][0] = 1; preferenciasTurmaA [1][1] = 0; preferenciasTurmaA [1][2] = 2;
@@ -32,8 +34,8 @@ public class GeneticAlgorithmStudents {
 
     public static void runGenerations() {
         Random rand = new Random();
-        populacao = new int[quantidadeDeCromossomos][tamanhoDaTurma+1];
-        intermediaria = new int[quantidadeDeCromossomos][tamanhoDaTurma+1];
+        populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
+        intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         int melhor;
 
         //cria a população inicial
@@ -57,14 +59,24 @@ public class GeneticAlgorithmStudents {
 
 
     public static void  init() {
-        Random rand = new Random();
+        Integer[] cromossomo = new Integer[tamanhoDaTurma];
+
+        // Cria um cromossomo com os números em ordem
+        for (int i = 0; i < cromossomo.length; i++) {
+            cromossomo[i] = i;
+        }
 
         for (int i = 0; i < quantidadeDeCromossomos; i++) {
-            for (int j=0; j < tamanhoDaTurma; j++) {
-                populacao[i][j] = rand.nextInt(2);
-            }
+            Collections.shuffle(Arrays.asList(cromossomo));
+            populacao[i] = cromossomo;
+            populacao[i] = Arrays.copyOf(populacao[i], tamanhoDaTurma + 1);
+            populacao[i][tamanhoDaTurma]=42;
+            System.out.println("Cromossomo " + i + "= " + Arrays.toString(populacao[i]));
         }
+
+
     }
+
 
     public static void printMatriz() {
         int j = 0;
