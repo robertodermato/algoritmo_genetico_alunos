@@ -12,6 +12,10 @@ public class App {
         //inicializa atributos
         //algoritmo1 = new GeneticAlgorithm();
         algoritmo2 = new GeneticAlgorithmStudents();
+
+        //apagar depois
+        algoritmo2.runGenerations();
+
         readFile();
         fillDataInApp();
     }

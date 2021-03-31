@@ -7,9 +7,10 @@ public class GeneticAlgorithmStudents {
 
     private static int quantidadeDeCromossomos;
     private static int tamanhoDaTurma;
+    private static int fatorDeOdio;
 
-    private static int[][] preferenciasTurmaA;
-    private static int[][] preferenciasTurmaB;
+    private static Integer[][] preferenciasTurmaA;
+    private static Integer[][] preferenciasTurmaB;
 
     private static Integer[][] populacao;
     private static Integer[][] intermediaria;
@@ -17,18 +18,13 @@ public class GeneticAlgorithmStudents {
     public GeneticAlgorithmStudents(){
 
         quantidadeDeCromossomos = 20;
-        tamanhoDaTurma = 6;
-        preferenciasTurmaA = new int[tamanhoDaTurma][3];
-        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 2; preferenciasTurmaA [0][2] = 1;
-        preferenciasTurmaA [1][0] = 1; preferenciasTurmaA [1][1] = 0; preferenciasTurmaA [1][2] = 2;
-        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 1; preferenciasTurmaA [2][2] = 0;
+        tamanhoDaTurma = 4;
+        fatorDeOdio = 1;
 
-        preferenciasTurmaB = new int[tamanhoDaTurma][3];
-        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 2; preferenciasTurmaB [0][2] = 1;
-        preferenciasTurmaB [1][0] = 1; preferenciasTurmaB [1][1] = 0; preferenciasTurmaB [1][2] = 2;
-        preferenciasTurmaB [2][0] = 2; preferenciasTurmaB [2][1] = 1; preferenciasTurmaB [2][2] = 0;
-
-
+        preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
+        preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
+        //populaTurmaPerfeita();
+        populaTurmaaleatoria();
 
     }
 
@@ -70,7 +66,7 @@ public class GeneticAlgorithmStudents {
             Collections.shuffle(Arrays.asList(cromossomo));
             populacao[i] = cromossomo;
             populacao[i] = Arrays.copyOf(populacao[i], tamanhoDaTurma + 1);
-            populacao[i][tamanhoDaTurma]=42;
+            populacao[i][tamanhoDaTurma]= aptidao(i);
             System.out.println("Cromossomo " + i + "= " + Arrays.toString(populacao[i]));
         }
 
@@ -90,18 +86,38 @@ public class GeneticAlgorithmStudents {
     }
     //Dicas pro proximo: não da pra segurar shift
 
-    public static int aptidao(int individuo){
-        int somaZero = 0;
-        int somaUm = 0;
-        for(int j = 0; j < tamanhoDaTurma; j++){
-            if(populacao[individuo][j] == 0 ){
-                //somaZero += cargas[j];
-            } else {
-                //somaUm += cargas[j];
+
+    public static int aptidao(int x){
+        int soma = 0;
+        int posicaoDePreferenciaDoAluno;
+        int valorDaPreferencia;
+        System.out.println("Cromossomo sendo analisado " + x + "= " + Arrays.toString(populacao[x]));
+        for(int i = 0; i < tamanhoDaTurma; i++){
+            //Vê as posições de preferências nas turma A
+            posicaoDePreferenciaDoAluno = indexOf(populacao[x][i], preferenciasTurmaA[i]);
+            System.out.println("posição da preferencia do aluno " + populacao[x][i] + " da turma B para o aluno A" + i + " é: " + posicaoDePreferenciaDoAluno);
+            valorDaPreferencia = posicaoDePreferenciaDoAluno * fatorDeOdio;
+            soma = soma + valorDaPreferencia;
+
+            //Vê as posições de preferências nas turma B
+            posicaoDePreferenciaDoAluno = indexOf(i, preferenciasTurmaB[populacao[x][i]]);
+            System.out.println("posição da preferencia do aluno " + i + " da turma A para o aluno B" + populacao[x][i] + " é: " + posicaoDePreferenciaDoAluno);
+            valorDaPreferencia = posicaoDePreferenciaDoAluno * fatorDeOdio;
+            soma = soma + valorDaPreferencia;
+
+        }
+        System.out.println(soma);
+        return soma;
+    }
+
+    public static int indexOf(int elemento, Integer [] vetor){
+        for (int i=0; i<vetor.length; i++)
+        {
+            if (vetor[i] == elemento ) {
+                return i;
             }
         }
-        return Math.abs(somaZero - somaUm);
-
+        return -1;
     }
 
     public static void calculaAptidao(){
@@ -193,6 +209,34 @@ public class GeneticAlgorithmStudents {
             return true;
         }
         return false;
+    }
+
+    public static void populaTurmaPerfeita(){
+
+    preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 1; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 3;
+    preferenciasTurmaA [1][0] = 1; preferenciasTurmaA [1][1] = 2; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
+    preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
+    preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 0; preferenciasTurmaA [3][2] = 1; preferenciasTurmaA [3][3] = 2;
+
+    preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
+    preferenciasTurmaB [1][0] = 1; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 0;
+    preferenciasTurmaB [2][0] = 2; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 0; preferenciasTurmaB [2][3] = 1;
+    preferenciasTurmaB [3][0] = 3; preferenciasTurmaB [3][1] = 0; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
+
+    }
+
+    public static void populaTurmaaleatoria(){
+
+        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 3; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 1;
+        preferenciasTurmaA [1][0] = 2; preferenciasTurmaA [1][1] = 1; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
+        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
+        preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 1; preferenciasTurmaA [3][2] = 0; preferenciasTurmaA [3][3] = 2;
+
+        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
+        preferenciasTurmaB [1][0] = 0; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 1;
+        preferenciasTurmaB [2][0] = 0; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 2; preferenciasTurmaB [2][3] = 1;
+        preferenciasTurmaB [3][0] = 0; preferenciasTurmaB [3][1] = 3; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
+
     }
 }
 
