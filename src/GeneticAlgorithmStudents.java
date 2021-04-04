@@ -14,12 +14,16 @@ public class GeneticAlgorithmStudents {
 
     private static Integer[][] populacao;
     private static Integer[][] intermediaria;
+
+    private static CrossoverOBX crossoverOBX;
     //
     public GeneticAlgorithmStudents(){
 
         quantidadeDeCromossomos = 20;
         tamanhoDaTurma = 4;
         fatorDeOdio = 1;
+        crossoverOBX = new CrossoverOBX();
+
 
         preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
         preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
@@ -36,6 +40,7 @@ public class GeneticAlgorithmStudents {
 
         //cria a população inicial
         init();
+        crossoverOBX.crossover(populacao,0);
 
         for (int g=0; g<300; g++){
             System.out.println("Geração: " + g);
@@ -44,7 +49,7 @@ public class GeneticAlgorithmStudents {
             melhor = getBest();
             System.out.println( "Metodo Elitismo = " + melhor);
             if(achouSolucao(melhor)) break;
-            crossover();
+            //crossover();
             populacao = intermediaria;
             if(rand.nextInt(5)==0) {
                 System.out.println("Mutação");
