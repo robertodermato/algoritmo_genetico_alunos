@@ -43,16 +43,16 @@ public class GeneticAlgorithmStudents {
         crossoverOBX.crossover(populacao,0);
 
         for (int g=0; g<300; g++){
-            System.out.println("Geração: " + g);
+            //System.out.println("Geração: " + g);
             calculaAptidao();
-            printMatriz();
+            //printMatriz();
             melhor = getBest();
-            System.out.println( "Metodo Elitismo = " + melhor);
+            //System.out.println( "Metodo Elitismo = " + melhor);
             if(achouSolucao(melhor)) break;
             //crossover();
             populacao = intermediaria;
             if(rand.nextInt(5)==0) {
-                System.out.println("Mutação");
+                //System.out.println("Mutação");
                 mutacao();
             }
         }
@@ -72,7 +72,7 @@ public class GeneticAlgorithmStudents {
             populacao[i] = cromossomo;
             populacao[i] = Arrays.copyOf(populacao[i], tamanhoDaTurma + 1);
             populacao[i][tamanhoDaTurma]= aptidao(i);
-            System.out.println("Cromossomo " + i + "= " + Arrays.toString(populacao[i]));
+            //System.out.println("Cromossomo " + i + "= " + Arrays.toString(populacao[i]));
         }
 
 
@@ -82,7 +82,7 @@ public class GeneticAlgorithmStudents {
     public static void printMatriz() {
         int j = 0;
         for (int i = 0; i < quantidadeDeCromossomos; i++) {
-            System.out.print("C: " + i + " - ");
+            //System.out.print("C: " + i + " - ");
             for (j=0; j < tamanhoDaTurma; j++) {
                 System.out.print(populacao[i][j] + " ");
             }
@@ -96,22 +96,22 @@ public class GeneticAlgorithmStudents {
         int soma = 0;
         int posicaoDePreferenciaDoAluno;
         int valorDaPreferencia;
-        System.out.println("Cromossomo sendo analisado " + x + "= " + Arrays.toString(populacao[x]));
+        //System.out.println("Cromossomo sendo analisado " + x + "= " + Arrays.toString(populacao[x]));
         for(int i = 0; i < tamanhoDaTurma; i++){
             //Vê as posições de preferências nas turma A
             posicaoDePreferenciaDoAluno = indexOf(populacao[x][i], preferenciasTurmaA[i]);
-            System.out.println("posição da preferencia do aluno " + populacao[x][i] + " da turma B para o aluno A" + i + " é: " + posicaoDePreferenciaDoAluno);
+            //System.out.println("posição da preferencia do aluno " + populacao[x][i] + " da turma B para o aluno A" + i + " é: " + posicaoDePreferenciaDoAluno);
             valorDaPreferencia = posicaoDePreferenciaDoAluno * fatorDeOdio;
             soma = soma + valorDaPreferencia;
 
             //Vê as posições de preferências nas turma B
             posicaoDePreferenciaDoAluno = indexOf(i, preferenciasTurmaB[populacao[x][i]]);
-            System.out.println("posição da preferencia do aluno " + i + " da turma A para o aluno B" + populacao[x][i] + " é: " + posicaoDePreferenciaDoAluno);
+            //System.out.println("posição da preferencia do aluno " + i + " da turma A para o aluno B" + populacao[x][i] + " é: " + posicaoDePreferenciaDoAluno);
             valorDaPreferencia = posicaoDePreferenciaDoAluno * fatorDeOdio;
             soma = soma + valorDaPreferencia;
 
         }
-        System.out.println(soma);
+        //System.out.println(soma);
         return soma;
     }
 
@@ -183,7 +183,7 @@ public class GeneticAlgorithmStudents {
             int individuo = rand.nextInt(quantidadeDeCromossomos);
             int posicao = rand.nextInt(tamanhoDaTurma);
 
-            System.out.println("Cromossomo " + individuo + " sofreu mutação na carga de indice " + posicao);
+            //System.out.println("Cromossomo " + individuo + " sofreu mutação na carga de indice " + posicao);
             if(populacao[individuo][posicao]==0) populacao[individuo][posicao]=1;
             else populacao[individuo][posicao]=0;
         }
