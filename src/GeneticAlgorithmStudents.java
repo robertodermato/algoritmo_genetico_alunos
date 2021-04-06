@@ -8,6 +8,7 @@ public class GeneticAlgorithmStudents {
     private static int quantidadeDeCromossomos;
     private static int tamanhoDaTurma;
     private static int fatorDeOdio;
+    private static double taxaDeCrossover;
 
     private static Integer[][] preferenciasTurmaA;
     private static Integer[][] preferenciasTurmaB;
@@ -22,7 +23,8 @@ public class GeneticAlgorithmStudents {
         quantidadeDeCromossomos = 20;
         tamanhoDaTurma = 4;
         fatorDeOdio = 1;
-        crossoverOBX = new CrossoverOBX();
+        taxaDeCrossover = 0.5;
+        crossoverOBX = new CrossoverOBX(taxaDeCrossover);
 
 
         preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
