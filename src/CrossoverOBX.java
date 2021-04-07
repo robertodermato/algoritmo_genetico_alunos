@@ -111,7 +111,7 @@ public class CrossoverOBX {
         }
          */
 
-        System.out.println("");
+        //System.out.println("");
 
         parent1 = populacaoParaCrossover[pai1];
         parent2 = populacaoParaCrossover[pai2];

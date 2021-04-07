@@ -18,6 +18,7 @@ public class GeneticAlgorithmStudents {
     private static Integer[][] intermediaria;
 
     private static int geracoesParaRodar;
+    private static int pararAposXGeracoesRepetindoResultados;
 
     private static CrossoverOBX crossoverOBX;
 
@@ -31,11 +32,12 @@ public class GeneticAlgorithmStudents {
         taxaDeGenesQueSofreraoCrossover = 0.5;
         geracoesParaRodar = 300;
         nivelDeVerbosidade = 0;
+        pararAposXGeracoesRepetindoResultados = 20;
 
         preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
         preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
-        populaTurmaPerfeita();
-        //populaTurmaaleatoria();
+        //populaTurmaPerfeita();
+        populaTurmaaleatoria();
 
         // Aloca o espaço das populações
         populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
@@ -53,6 +55,8 @@ public class GeneticAlgorithmStudents {
         //populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         //intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         int melhor;
+        int melhorGeracaoAnterior = -1;
+        int contadorDeRepeticoesDeResultados = 0;
 
         // Cria a população inicial
         //init();
@@ -61,7 +65,7 @@ public class GeneticAlgorithmStudents {
 
         // Roda as gerações
         for (int g=0; g<geracoesParaRodar; g++){
-            System.out.println("=========== Geração: " + g + " ===========");
+            System.out.println("\n\n===================== Geração: " + g + " =====================");
             calculaAptidao();
             //printMatriz();
 
@@ -69,6 +73,21 @@ public class GeneticAlgorithmStudents {
             melhor = getBest();
             System.out.print("Pelo método de Elitismo, o melhor cromossomo encontrado é o " + melhor + " - ");
             printCromossomo(melhor);
+
+            if (melhor==melhorGeracaoAnterior){
+                contadorDeRepeticoesDeResultados = contadorDeRepeticoesDeResultados +1;
+                //System.out.println("contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
+                if (contadorDeRepeticoesDeResultados==pararAposXGeracoesRepetindoResultados){
+                    paradaPorRepeticao(melhor);
+                    break;
+                }
+            }
+            else{
+                contadorDeRepeticoesDeResultados=0;
+                //System.out.println("Zerou. contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
+            }
+
+            melhorGeracaoAnterior=melhor;
 
             // Testa se achou solução ideal
             if(populacao[melhor][tamanhoDaTurma]==0) {
@@ -263,7 +282,17 @@ public class GeneticAlgorithmStudents {
         for (int i=0; i<populacao[melhor].length; i++){
             System.out.print(populacao[melhor][i] + ", ");
         }
+    }
 
+    public static void paradaPorRepeticao(int melhor){
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("=================================================");
+        System.out.println("Parou a execução, pois ficou repetindo a mesma solução. Essa solução corresponde ao cromossomo: "+ melhor);
+        System.out.println("Solução Decodificada: ");
+        for (int i=0; i<populacao[melhor].length; i++){
+            System.out.print(populacao[melhor][i] + ", ");
+        }
     }
 
     public static void populaTurmaPerfeita(){
