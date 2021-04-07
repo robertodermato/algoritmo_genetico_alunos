@@ -156,8 +156,7 @@ public class CrossoverOBX {
         // Cria um vetor com os elementos que sofrerão crossover
         crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
         Integer [] elementosDoPai2 = new Integer[(int) crossoverRateSum];
-        System.out.println("Pai 2 tem um array com " + elementosDoPai2.length + " elementos");
-
+        //System.out.println("Pai 2 tem um array com " + elementosDoPai2.length + " elementos");
 
         k=0;
         for (int i=0; i<posicoesDoCrossover.length; i++){
@@ -175,10 +174,12 @@ public class CrossoverOBX {
         }
          */
 
+        /*
         System.out.println("elementos do pai 1");
         for (int i=0; i <elementosDoPai1.length; i++){
             System.out.print(elementosDoPai1[i] + ", ");
         }
+         */
 
         /*
         System.out.println("");

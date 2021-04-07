@@ -47,16 +47,24 @@ public class GeneticAlgorithmStudents {
         init();
 
         crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
-        intermediaria = crossoverOBX.crossover();
+
 
         for (int g=0; g<geracoesParaRodar; g++){
             System.out.println("Geração: " + g);
             calculaAptidao();
             //printMatriz();
+
+            // Calcula qual o melhor cromossomo
             melhor = getBest();
-            //System.out.println( "Metodo Elitismo = " + melhor);
-            //if(achouSolucao(melhor)) break;
-            //crossover();
+            System.out.println( "Metodo Elitismo melhor cromossomo = " + melhor);
+
+            // Testa se achou solução ideal
+            if(populacao[melhor][tamanhoDaTurma]==0) {
+                achouSolucao(melhor);
+                break;
+            }
+
+            intermediaria = crossoverOBX.crossover();
             populacao = intermediaria;
             if(rand.nextInt(5)==0) {
                 //System.out.println("Mutação");
@@ -103,7 +111,11 @@ public class GeneticAlgorithmStudents {
         int soma = 0;
         int posicaoDePreferenciaDoAluno;
         int valorDaPreferencia;
-        System.out.println("Cromossomo sendo analisado " + x + "= " + Arrays.toString(populacao[x]));
+        System.out.print("Cromossomo sendo analisado " + x + " = ");
+        for (int i=0; i<populacao[x].length-1; i++){
+            System.out.print(populacao[x][i] + ", ");
+        }
+
         for(int i = 0; i < tamanhoDaTurma; i++){
             //Vê as posições de preferências nas turma A
             posicaoDePreferenciaDoAluno = indexOf(populacao[x][i], preferenciasTurmaA[i]);
@@ -118,7 +130,7 @@ public class GeneticAlgorithmStudents {
             soma = soma + valorDaPreferencia;
 
         }
-        //System.out.println(soma);
+        System.out.println(" -- Aptidão: " + soma);
         return soma;
     }
 
@@ -210,30 +222,13 @@ public class GeneticAlgorithmStudents {
 
     }
 
-    public static boolean achouSolucao(int melhor){
-        if(populacao[melhor][tamanhoDaTurma]==0){
-            int soma = 0;
-            System.out.println("\nAchou a solução ótima. Ela corresponde ao cromossomo :"+ melhor);
-            System.out.println("Solução Decodificada: ");
-            System.out.println("Pessoa 0: ");
-            for(int i=0; i<tamanhoDaTurma; i++)
-                if(populacao[melhor][i]==0) {
-                    //System.out.print(tamanhoDaTurma[i]+ " ");
-                    //soma = soma + cargas[i];
-                }
-            System.out.println(" - Total: " + soma);
-
-            soma = 0;
-            System.out.println("Pessoa 1: ");
-            for(int i=0; i<tamanhoDaTurma; i++)
-                if(populacao[melhor][i]==1) {
-                    //System.out.print(cargas[i]+ " ");
-                    //soma = soma + cargas[i];
-                }
-            System.out.println(" - Total: " + soma);
-            return true;
+    public static void achouSolucao(int melhor){
+        System.out.println("\nAchou a solução ótima. Ela corresponde ao cromossomo :"+ melhor);
+        System.out.println("Solução Decodificada: ");
+        for (int i=0; i<populacao[melhor].length; i++){
+            System.out.print(populacao[melhor][i] + ", ");
         }
-        return false;
+
     }
 
     public static void populaTurmaPerfeita(){
