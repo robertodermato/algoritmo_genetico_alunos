@@ -23,13 +23,16 @@ public class App {
     public void run() {
         int opcao = 1;
 
-        System.out.println("\nBem vindo ao App de confraternização de turmas");
-        System.out.println("===============================");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("=================================================");
+        System.out.println("Bem vindo ao App de confraternização de turmas");
+        System.out.println("=================================================");
 
         while(opcao!= 0){       // Repetição do menu
 
-            System.out.println();
-            System.out.println("Escolha uma das opções: \n");
+            //System.out.println();
+            System.out.println("Escolha uma das opções: ");
 
             System.out.println("1 - Ver a execução passo a passo");
             System.out.println("2 - Ver apenas o resultado final");
@@ -80,6 +83,6 @@ public class App {
     }
 
     private void populaLista(){
-        System.out.println("\nForam adicionados " + " na turma A e x alunos na turma B.");
+        //System.out.println("\nForam adicionados " + " na turma A e x alunos na turma B.");
     }
 }

@@ -20,43 +20,55 @@ public class GeneticAlgorithmStudents {
     private static int geracoesParaRodar;
 
     private static CrossoverOBX crossoverOBX;
+
+    private static int nivelDeVerbosidade;
     //
     public GeneticAlgorithmStudents(){
 
-        quantidadeDeCromossomos = 20;
+        quantidadeDeCromossomos = 10;
         tamanhoDaTurma = 4;
         fatorDeOdio = 1;
         taxaDeGenesQueSofreraoCrossover = 0.5;
         geracoesParaRodar = 300;
-
+        nivelDeVerbosidade = 0;
 
         preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
         preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
-        //populaTurmaPerfeita();
-        populaTurmaaleatoria();
+        populaTurmaPerfeita();
+        //populaTurmaaleatoria();
 
+        // Aloca o espaço das populações
+        populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
+        intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
+
+        // Cria a população inicial
+        init();
+
+        // Inicializa o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
+        crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
     }
 
     public static void runGenerations() {
         Random rand = new Random();
-        populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
-        intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
+        //populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
+        //intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         int melhor;
 
-        //cria a população inicial
-        init();
+        // Cria a população inicial
+        //init();
 
-        crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
+        //crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
 
-
+        // Roda as gerações
         for (int g=0; g<geracoesParaRodar; g++){
-            System.out.println("Geração: " + g);
+            System.out.println("=========== Geração: " + g + " ===========");
             calculaAptidao();
             //printMatriz();
 
             // Calcula qual o melhor cromossomo
             melhor = getBest();
-            System.out.println( "Metodo Elitismo melhor cromossomo = " + melhor);
+            System.out.print("Pelo método de Elitismo, o melhor cromossomo encontrado é o " + melhor + " - ");
+            printCromossomo(melhor);
 
             // Testa se achou solução ideal
             if(populacao[melhor][tamanhoDaTurma]==0) {
@@ -94,6 +106,18 @@ public class GeneticAlgorithmStudents {
     }
 
 
+    public static void printCromossomo (int cromossomo){
+        System.out.print("[");
+        for (int i=0; i<populacao[cromossomo].length-1; i++){
+            if (i==populacao[cromossomo].length-2){
+                System.out.print(populacao[cromossomo][i]+"]");
+                break;
+            }
+            System.out.print(populacao[cromossomo][i] + ", ");
+        }
+        System.out.print(" -- Aptidão: " + populacao[cromossomo][populacao[cromossomo].length-1]);
+    }
+
     public static void printMatriz() {
         int j = 0;
         for (int i = 0; i < quantidadeDeCromossomos; i++) {
@@ -111,6 +135,8 @@ public class GeneticAlgorithmStudents {
         int soma = 0;
         int posicaoDePreferenciaDoAluno;
         int valorDaPreferencia;
+
+        /*
         System.out.print("Cromossomo sendo analisado " + x + " = [");
         for (int i=0; i<populacao[x].length-1; i++){
             if (i==populacao[x].length-2){
@@ -119,6 +145,7 @@ public class GeneticAlgorithmStudents {
             }
             System.out.print(populacao[x][i] + ", ");
         }
+         */
 
         for(int i = 0; i < tamanhoDaTurma; i++){
             //Vê as posições de preferências nas turma A
@@ -134,7 +161,7 @@ public class GeneticAlgorithmStudents {
             soma = soma + valorDaPreferencia;
 
         }
-        System.out.println(" -- Aptidão: " + soma);
+        //System.out.println(" -- Aptidão: " + soma);
         return soma;
     }
 
@@ -153,6 +180,7 @@ public class GeneticAlgorithmStudents {
             populacao[i][tamanhoDaTurma] = aptidao(i);
         }
     }
+
     public static int getBest(){
         int min = populacao[0][tamanhoDaTurma];
         int linha = 0;
@@ -227,7 +255,10 @@ public class GeneticAlgorithmStudents {
     }
 
     public static void achouSolucao(int melhor){
-        System.out.println("\nAchou a solução ótima. Ela corresponde ao cromossomo :"+ melhor);
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("=================================================");
+        System.out.println("Achou a solução ótima. Ela corresponde ao cromossomo: "+ melhor);
         System.out.println("Solução Decodificada: ");
         for (int i=0; i<populacao[melhor].length; i++){
             System.out.print(populacao[melhor][i] + ", ");
@@ -251,17 +282,7 @@ public class GeneticAlgorithmStudents {
 
     public static void populaTurmaaleatoria(){
 
-        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 1; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 3;
-        preferenciasTurmaA [1][0] = 1; preferenciasTurmaA [1][1] = 2; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
-        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
-        preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 0; preferenciasTurmaA [3][2] = 1; preferenciasTurmaA [3][3] = 2;
 
-        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
-        preferenciasTurmaB [1][0] = 1; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 0;
-        preferenciasTurmaB [2][0] = 2; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 0; preferenciasTurmaB [2][3] = 1;
-        preferenciasTurmaB [3][0] = 3; preferenciasTurmaB [3][1] = 0; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
-
-        /*
         preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 3; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 1;
         preferenciasTurmaA [1][0] = 2; preferenciasTurmaA [1][1] = 1; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
         preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
@@ -271,7 +292,7 @@ public class GeneticAlgorithmStudents {
         preferenciasTurmaB [1][0] = 0; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 1;
         preferenciasTurmaB [2][0] = 0; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 2; preferenciasTurmaB [2][3] = 1;
         preferenciasTurmaB [3][0] = 0; preferenciasTurmaB [3][1] = 3; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
-        */
+
 
     }
 }

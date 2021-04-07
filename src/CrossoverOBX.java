@@ -92,7 +92,8 @@ public class CrossoverOBX {
             if (posicoesDoCrossover[i]==null) posicoesDoCrossover[i]=0;
         }
 
-        //System.out.print("A máscara de crossover que será usada é (sendo 1 = gene que sofrerá crossover e 0 = não sofrerá): ");
+        /*
+        System.out.print("A máscara de crossover que será usada é (sendo 1 = gene que sofrerá crossover e 0 = não sofrerá): ");
         for (int i=0; i<quantidadeDeGenes-1; i++){
             if (i==quantidadeDeGenes-2){
                 System.out.print(posicoesDoCrossover[i]);
@@ -100,6 +101,7 @@ public class CrossoverOBX {
             }
             System.out.print(posicoesDoCrossover[i]+", ");
         }
+         */
 
         /*
         System.out.println("");
