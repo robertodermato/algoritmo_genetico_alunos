@@ -8,7 +8,8 @@ public class GeneticAlgorithmStudents {
     private static int quantidadeDeCromossomos;
     private static int tamanhoDaTurma;
     private static int fatorDeOdio;
-    private static double taxaDeCrossover;
+    private static double taxaDeGenesQueSofreraoCrossover;
+    private static double taxaDeInidviduosDaPopulacaoQueSofreraoCrossover;
 
     private static Integer[][] preferenciasTurmaA;
     private static Integer[][] preferenciasTurmaB;
@@ -23,8 +24,7 @@ public class GeneticAlgorithmStudents {
         quantidadeDeCromossomos = 20;
         tamanhoDaTurma = 4;
         fatorDeOdio = 1;
-        taxaDeCrossover = 0.5;
-        crossoverOBX = new CrossoverOBX(taxaDeCrossover);
+        taxaDeGenesQueSofreraoCrossover = 0.5;
 
 
         preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
@@ -42,7 +42,9 @@ public class GeneticAlgorithmStudents {
 
         //cria a população inicial
         init();
-        crossoverOBX.crossover(populacao,0);
+        System.out.println("fez o init");
+        crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
+        crossoverOBX.crossover();
 
         for (int g=0; g<300; g++){
             //System.out.println("Geração: " + g);
@@ -150,10 +152,19 @@ public class GeneticAlgorithmStudents {
 
     public static int torneio(){
         Random rand = new Random();
-        int individuo1 ,individuo2;
+        int individuo1 =0;
+        int individuo2 =0;
 
         individuo1 = rand.nextInt(quantidadeDeCromossomos);
         individuo2 = rand.nextInt(quantidadeDeCromossomos);
+
+        while (individuo2==individuo1){
+            individuo2 = rand.nextInt(quantidadeDeCromossomos);
+        }
+
+        System.out.println("========= Torneio ========");
+        System.out.println("Aptidão do ind1 = " + populacao[individuo1][tamanhoDaTurma] + " e seu ídice é " + individuo1);
+        System.out.println("Aptidão do ind2 = " + populacao[individuo2][tamanhoDaTurma] + " e seu ídice é " + individuo2);
 
         if(populacao[individuo1][tamanhoDaTurma] < populacao[individuo2][tamanhoDaTurma])
             return individuo1;

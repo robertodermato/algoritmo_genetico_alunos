@@ -1,29 +1,56 @@
-// source: https://github.com/sangreal/monitor-ye/blob/4f90f5c37d207a4ebfd9683af60badf5cd8c5e9f/enn-monitor-ai-test/enn-monitor-ai-common/src/main/java/enn/monitor/ai/ga/crossover/GACrossoverOBX.java
-
-//package enn.monitor.ai.ga.crossover;
-
+// fonte de inspiração: https://github.com/sangreal/monitor-ye/blob/4f90f5c37d207a4ebfd9683af60badf5cd8c5e9f/enn-monitor-ai-test/enn-monitor-ai-common/src/main/java/enn/monitor/ai/ga/crossover/GACrossoverOBX.java
 import java.util.*;
-
-//import enn.monitor.ai.ga.common.SGenome;
 
 public class CrossoverOBX {
 
     private double crossoverRate;
+    private Integer [][] populacaoParaCrossover;
+    private Integer [][] populacaoCriadaComCrossover;
+    int quantidadeDeCromossomos;
+    int quantidadeDeGenes;
 
-    public CrossoverOBX(double taxaDeCrossover) {
+    public CrossoverOBX(double taxaDeCrossover, Integer [][] populacaoRecebida) {
         crossoverRate=taxaDeCrossover;
+        populacaoParaCrossover=populacaoRecebida;
+        quantidadeDeCromossomos=populacaoParaCrossover.length;
+        quantidadeDeGenes=populacaoParaCrossover[0].length;
+        populacaoCriadaComCrossover = new Integer [populacaoRecebida.length][populacaoRecebida[0].length];
     }
 
-    public void crossover(Integer [][] populacao, int nBest) {
+    public Integer [][] crossover(){
+
+        // Mantém o cromossomo Elite
+        populacaoCriadaComCrossover[0] = populacaoParaCrossover[0];
+
+        for (int j = 1; j< quantidadeDeCromossomos; j=j+2){
+            int cromossomoPai1 = torneio();
+            int cromossomoPai2 = torneio();
+
+            while (cromossomoPai1==cromossomoPai2){
+                cromossomoPai2 = torneio();
+            }
+
+            System.out.println("============Pegando indivíduos para crossover=======");
+            System.out.println("Pai1 do crossover é: " + cromossomoPai1);
+            System.out.println("Pai2 do crossover é: " + cromossomoPai2);
+
+            doCrossoverOBX(j, cromossomoPai1, cromossomoPai2);
+        }
+
+        return populacaoCriadaComCrossover;
+
+    }
+
+    public void doCrossoverOBX(int indiceParaFilho1, int pai1, int pai2) {
         Random rng = new Random();
 
         // Calcula em quantos genes ocorrerá o crossover
-        long crossoverRateSum = Math.round((populacao[0].length -1) * crossoverRate);
+        long crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
         System.out.println("");
         System.out.println("=============================== Crossover ================================");
-        System.out.println("Como a taxa de crossover é " + crossoverRate + " e o tamanho de um cromosso é " + (populacao[0].length-1) + ", o crossover ocorrerá em " + crossoverRateSum + " genes.");
+        System.out.println("Como a taxa de crossover é " + crossoverRate + " e o tamanho de um cromosso é " + (quantidadeDeGenes-1) + ", o crossover ocorrerá em " + crossoverRateSum + " genes.");
 
-        Integer [] posicoesDoCrossover = new Integer[populacao[0].length];
+        Integer [] posicoesDoCrossover = new Integer[quantidadeDeGenes];
 
         Integer [] parent1 = null;
         Integer [] parent2 = null;
@@ -32,7 +59,7 @@ public class CrossoverOBX {
         Integer [] son2 = null;
 
         //escolhendo as posições do genoma que sofrerão crossover. Vai até -1 pra não pegar a função de fitness
-        for (int i=0; i<populacao[0].length-1; i++){
+        for (int i=0; i < quantidadeDeGenes-1; i++){
             posicoesDoCrossover[i]=rng.nextInt(2);
             //System.out.println("posicoesDoCrossover[" +i +"]= " +posicoesDoCrossover[i] );
 
@@ -47,22 +74,22 @@ public class CrossoverOBX {
             }
 
             // Se chegou ao final do loop e ainda não atingiu o número necessário de genes selecionados para o crossover, reseta o vetor e reinicia o loop
-            if (i==populacao[0].length-2 && crossoverRateSum!=0) {
+            if (i==quantidadeDeGenes-2 && crossoverRateSum!=0) {
                 i=-1;
-                crossoverRateSum = Math.round((populacao[0].length -1) * crossoverRate);
+                crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
                 for (int j=0; j<posicoesDoCrossover.length;j++){
                     posicoesDoCrossover[j]=0;
                 }
             }
         }
 
-        for (int i=0; i<populacao[0].length; i++){
+        for (int i=0; i < quantidadeDeGenes; i++){
             if (posicoesDoCrossover[i]==null) posicoesDoCrossover[i]=0;
         }
 
         System.out.print("A máscara de crossover que será usada é (sendo 1 = gene que sofrerá crossover e 0 = não sofrerá): ");
-        for (int i=0; i<populacao[0].length-1; i++){
-            if (i==populacao[0].length-2){
+        for (int i=0; i<quantidadeDeGenes-1; i++){
+            if (i==quantidadeDeGenes-2){
                 System.out.print(posicoesDoCrossover[i]);
                 break;
             }
@@ -71,7 +98,7 @@ public class CrossoverOBX {
 
         System.out.println("");
         System.out.print("Ou seja o crossover ocorrerá nos genes (posições): ");
-        for (int i=0; i<populacao[0].length-1; i++){
+        for (int i=0; i<quantidadeDeGenes-1; i++){
             if(posicoesDoCrossover[i]==1) System.out.print(i + ", ");
         }
 
@@ -81,6 +108,8 @@ public class CrossoverOBX {
         parent2 = new Integer[4];
         son1 = new Integer[4];
         son2 = new Integer[4];
+
+
 
         for (int i=0; i<parent1.length;i++){
             parent1[i]=i+4;
@@ -94,7 +123,7 @@ public class CrossoverOBX {
         }
 
         // Cria um vetor com os elementos que sofrerão crossover
-        crossoverRateSum = Math.round((populacao[0].length -1) * crossoverRate);
+        crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
         Integer [] elementosDoPai1 = new Integer[(int) crossoverRateSum];
 
         int k=0;
@@ -120,7 +149,7 @@ public class CrossoverOBX {
         }
 
         // Cria um vetor com os elementos que sofrerão crossover
-        crossoverRateSum = Math.round((populacao[0].length -1) * crossoverRate);
+        crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
         Integer [] elementosDoPai2 = new Integer[(int) crossoverRateSum];
 
         k=0;
@@ -227,6 +256,27 @@ public class CrossoverOBX {
 
     }
 
+    public int torneio(){
+        Random rand = new Random();
+        int individuo1 =0;
+        int individuo2 =0;
+
+        individuo1 = rand.nextInt(populacaoParaCrossover.length);
+        individuo2 = rand.nextInt(populacaoParaCrossover.length);
+
+        while (individuo2==individuo1){
+            individuo2 = rand.nextInt(populacaoParaCrossover.length);
+        }
+
+        System.out.println("========= Torneio ========");
+        System.out.println("Aptidão do ind1 = " + populacaoParaCrossover[individuo1][populacaoParaCrossover[0].length-1] + " e seu ídice é " + individuo1);
+        System.out.println("Aptidão do ind2 = " + populacaoParaCrossover[individuo2][populacaoParaCrossover[0].length-1] + " e seu ídice é " + individuo2);
+
+        if(populacaoParaCrossover[individuo1][populacaoParaCrossover[0].length-1] < populacaoParaCrossover[individuo2][populacaoParaCrossover[0].length-1])
+            return individuo1;
+        else
+            return individuo2;
+    }
 
 
 }
