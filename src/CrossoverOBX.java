@@ -48,9 +48,12 @@ public class CrossoverOBX {
 
         // Calcula em quantos genes ocorrerá o crossover
         long crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
+
+        /*
         System.out.println("");
         System.out.println("=============================== Crossover ================================");
         System.out.println("Como a taxa de crossover é " + crossoverRate + " e o tamanho de um cromosso é " + (quantidadeDeGenes-1) + ", o crossover ocorrerá em " + crossoverRateSum + " genes.");
+        */
 
         Integer [] posicoesDoCrossover = new Integer[quantidadeDeGenes];
 
@@ -89,7 +92,7 @@ public class CrossoverOBX {
             if (posicoesDoCrossover[i]==null) posicoesDoCrossover[i]=0;
         }
 
-        System.out.print("A máscara de crossover que será usada é (sendo 1 = gene que sofrerá crossover e 0 = não sofrerá): ");
+        //System.out.print("A máscara de crossover que será usada é (sendo 1 = gene que sofrerá crossover e 0 = não sofrerá): ");
         for (int i=0; i<quantidadeDeGenes-1; i++){
             if (i==quantidadeDeGenes-2){
                 System.out.print(posicoesDoCrossover[i]);
@@ -153,6 +156,8 @@ public class CrossoverOBX {
         // Cria um vetor com os elementos que sofrerão crossover
         crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
         Integer [] elementosDoPai2 = new Integer[(int) crossoverRateSum];
+        System.out.println("Pai 2 tem um array com " + elementosDoPai2.length + " elementos");
+
 
         k=0;
         for (int i=0; i<posicoesDoCrossover.length; i++){
@@ -170,11 +175,31 @@ public class CrossoverOBX {
         }
          */
 
+        System.out.println("elementos do pai 1");
+        for (int i=0; i <elementosDoPai1.length; i++){
+            System.out.print(elementosDoPai1[i] + ", ");
+        }
+
+        /*
+        System.out.println("");
+        System.out.println("parent2");
+        for (int i=0; i<parent2.length; i++){
+            System.out.print(parent2[i] + ", ");
+        }
+         */
+
         // Vê quais posições os genes de Pai 1 que sofrerão crossover estão no gene de pai 2
         Integer [] posicoesGenesPai1noPai2 = new Integer [elementosDoPai1.length];
+
+        /*
+        System.out.println("");
+        System.out.println("posicoes gene pai2 lenght " + posicoesGenesPai1noPai2.length);
+        System.out.println("");
+        */
+
         int p=0;
         for (int i=0; i<elementosDoPai1.length; i++){
-            for (int j=0; j<parent2.length; j++){
+            for (int j=0; j<parent2.length-1; j++){
                 if (elementosDoPai1[i]==parent2[j]){
                     posicoesGenesPai1noPai2[p]=j;
                     p++;
@@ -205,7 +230,7 @@ public class CrossoverOBX {
         Integer [] posicoesGenesPai2noPai1 = new Integer [elementosDoPai2.length];
         p=0;
         for (int i=0; i<elementosDoPai2.length; i++){
-            for (int j=0; j<parent1.length; j++){
+            for (int j=0; j<parent1.length-1; j++){
                 if (elementosDoPai2[i]==parent1[j]){
                     posicoesGenesPai2noPai1[p]=j;
                     p++;
@@ -265,8 +290,8 @@ public class CrossoverOBX {
         */
 
         int indiceParaFilho2 = indiceParaFilho1+1;
-        System.out.println("colocando os filhos na nova população");
-        System.out.println("colocado os filhos " + indiceParaFilho1 + " e " + indiceParaFilho2);
+        //System.out.println("colocando os filhos na nova população");
+        //System.out.println("colocado os filhos " + indiceParaFilho1 + " e " + indiceParaFilho2);
         populacaoCriadaComCrossover[indiceParaFilho1] = son1;
         if (indiceParaFilho2< quantidadeDeCromossomos) populacaoCriadaComCrossover[indiceParaFilho2] = son2;
 
