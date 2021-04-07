@@ -111,8 +111,12 @@ public class GeneticAlgorithmStudents {
         int soma = 0;
         int posicaoDePreferenciaDoAluno;
         int valorDaPreferencia;
-        System.out.print("Cromossomo sendo analisado " + x + " = ");
+        System.out.print("Cromossomo sendo analisado " + x + " = [");
         for (int i=0; i<populacao[x].length-1; i++){
+            if (i==populacao[x].length-2){
+                System.out.print(populacao[x][i]+"]");
+                break;
+            }
             System.out.print(populacao[x][i] + ", ");
         }
 
