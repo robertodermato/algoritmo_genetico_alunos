@@ -17,6 +17,8 @@ public class GeneticAlgorithmStudents {
     private static Integer[][] populacao;
     private static Integer[][] intermediaria;
 
+    private static int geracoesParaRodar;
+
     private static CrossoverOBX crossoverOBX;
     //
     public GeneticAlgorithmStudents(){
@@ -25,6 +27,7 @@ public class GeneticAlgorithmStudents {
         tamanhoDaTurma = 4;
         fatorDeOdio = 1;
         taxaDeGenesQueSofreraoCrossover = 0.5;
+        geracoesParaRodar = 300;
 
 
         preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
@@ -42,12 +45,12 @@ public class GeneticAlgorithmStudents {
 
         //cria a população inicial
         init();
-        System.out.println("fez o init");
-        crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
-        crossoverOBX.crossover();
 
-        for (int g=0; g<300; g++){
-            //System.out.println("Geração: " + g);
+        crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
+        intermediaria = crossoverOBX.crossover();
+
+        for (int g=0; g<geracoesParaRodar; g++){
+            System.out.println("Geração: " + g);
             calculaAptidao();
             //printMatriz();
             melhor = getBest();
@@ -57,7 +60,7 @@ public class GeneticAlgorithmStudents {
             populacao = intermediaria;
             if(rand.nextInt(5)==0) {
                 //System.out.println("Mutação");
-                mutacao();
+                //mutacao();
             }
         }
     }
@@ -100,7 +103,7 @@ public class GeneticAlgorithmStudents {
         int soma = 0;
         int posicaoDePreferenciaDoAluno;
         int valorDaPreferencia;
-        //System.out.println("Cromossomo sendo analisado " + x + "= " + Arrays.toString(populacao[x]));
+        System.out.println("Cromossomo sendo analisado " + x + "= " + Arrays.toString(populacao[x]));
         for(int i = 0; i < tamanhoDaTurma; i++){
             //Vê as posições de preferências nas turma A
             posicaoDePreferenciaDoAluno = indexOf(populacao[x][i], preferenciasTurmaA[i]);
@@ -150,6 +153,7 @@ public class GeneticAlgorithmStudents {
         return linha;
     }
 
+    /*
     public static int torneio(){
         Random rand = new Random();
         int individuo1 =0;
@@ -171,7 +175,9 @@ public class GeneticAlgorithmStudents {
         else
             return individuo2;
     }
+     */
 
+    /*
     public static void crossover(){
 
         for (int j = 1; j< quantidadeDeCromossomos; j=j+2){
@@ -188,6 +194,7 @@ public class GeneticAlgorithmStudents {
         }
 
     }
+     */
 
     public static void mutacao(){
         Random rand = new Random();
