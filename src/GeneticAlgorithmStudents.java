@@ -147,9 +147,15 @@ public class GeneticAlgorithmStudents {
             System.out.println("F: " + populacao[i][j]);
         }
     }
-    //Dicas pro proximo: não da pra segurar shift
 
+    public static void calculaAptidao(){
+        for(int i = 0; i < quantidadeDeCromossomos; i++){
+            populacao[i][tamanhoDaTurma] = aptidao(i);
+        }
+    }
 
+    // A aptidão e calculada pela posição em que o aluno ocupa na lista de preferência. Quanto mais preferido, menor a aptidão.
+    // Logo, quanto menor a aptidão, melhor a afinidade entre os alunos.
     public static int aptidao(int x){
         int soma = 0;
         int posicaoDePreferenciaDoAluno;
@@ -192,12 +198,6 @@ public class GeneticAlgorithmStudents {
             }
         }
         return -1;
-    }
-
-    public static void calculaAptidao(){
-        for(int i = 0; i < quantidadeDeCromossomos; i++){
-            populacao[i][tamanhoDaTurma] = aptidao(i);
-        }
     }
 
     public static int getBest(){
