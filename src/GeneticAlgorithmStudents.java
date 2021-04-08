@@ -32,6 +32,7 @@ public class GeneticAlgorithmStudents {
 
         quantidadeDeCromossomos = 11;
         tamanhoDaTurma = 4;
+        //primos();
         fatorDeOdio = 1;
 
         // Inicializando variáveis do crossover
@@ -132,8 +133,6 @@ public class GeneticAlgorithmStudents {
             populacao[i][tamanhoDaTurma]= aptidao(i);
             //System.out.println("Cromossomo " + i + "= " + Arrays.toString(populacao[i]));
         }
-
-
     }
 
 
@@ -306,6 +305,46 @@ public class GeneticAlgorithmStudents {
         System.out.println("Solução Decodificada: ");
         for (int i=0; i<populacao[melhor].length; i++){
             System.out.print(populacao[melhor][i] + ", ");
+        }
+    }
+
+    public static int fibonacci (int termo){
+        int [] memo = new int[termo+1];
+
+        memo[0]=1;
+        memo[1]=2;
+        memo[2]=3;
+
+        for (int i=2; i<=termo;i++){
+            memo[i]=memo[i-1]+memo[i-2];
+        }
+        return memo[termo];
+    }
+
+    public static void primosDiv2 () {
+        int [] primos = new int [tamanhoDaTurma];
+        int maximo = Integer.MAX_VALUE;
+        primos[0]=0;
+
+        int indicePrimos = 1;
+        int i =0;
+        int num =0;
+
+        for (i = 3; i <= maximo; i++) {
+            int counter=0;
+            for(num =i; num>=1; num--) {
+                if(i%num==0) counter = counter + 1;
+            }
+            if (counter ==2) {
+                primos [indicePrimos] = (int) Math.ceil(i/2);
+                indicePrimos++;
+                if (indicePrimos==tamanhoDaTurma) break;
+            }
+        }
+
+        System.out.println("Prime numbers from 1 to 100 are :");
+        for (int j=0; j<primos.length; j++){
+            System.out.println("primo " + j + ": " + primos[j] + ", ");
         }
     }
 
