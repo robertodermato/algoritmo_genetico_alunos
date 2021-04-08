@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,12 +18,13 @@ public class App {
     public App() {
         //inicializa atributos
         //algoritmo1 = new GeneticAlgorithm();
+        //readSource();
         algoritmo2 = new GeneticAlgorithmStudents();
 
         //apagar depois
         algoritmo2.runGenerations();
 
-        readFile();
+
         fillDataInApp();
     }
 
@@ -78,8 +86,37 @@ public class App {
         populaLista();
     }
 
-    private void readFile(){
+    /**
+     * Reads the SOURCE file and turns it into a single String for easier manipulation
+     *
+     * @param source                    the SOURCE file
+     * @exception NoSuchFileException   on file not found error
+     * @exception IOException           on any other error
+     * @return                          a String with the content of the SOURCE file
+     */
+    private String readSource(String source) {
+        Path path1 = Paths.get(source);
+        String sourceStringyfied ="";
 
+        try (BufferedReader reader = Files.newBufferedReader(path1.getFileName(), Charset.forName("utf8"))) {
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+
+                if (!line.isEmpty()) {
+                    line = line.trim();
+                    sourceStringyfied = sourceStringyfied + line;
+                }
+            }
+
+            return sourceStringyfied;
+
+        } catch (NoSuchFileException x) {
+            System.err.format("SOURCE File not found.\n", x);
+        } catch (IOException x) {
+            System.err.format("I/O Error %s%n\n", x);
+        }
+        return null;
     }
 
     private void populaLista(){
