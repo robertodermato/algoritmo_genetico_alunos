@@ -10,7 +10,7 @@ public class GeneticAlgorithmStudents {
     private static int fatorDeOdio;
 
     private static double taxaDeGenesQueSofreraoCrossover;
-    private static double taxaDeInidviduosDaPopulacaoQueSofreraoCrossover;
+    private static double taxaDeIndviduosDaPopulacaoQueSofreraoCrossover;
 
     private static double porcentagemDeCromossomosQueVaiSofrerMutacao;
     private static double porcentagemDeGenesQueVaoSofrerMutacao;
@@ -37,7 +37,7 @@ public class GeneticAlgorithmStudents {
 
         // Inicializando variáveis do crossover
         taxaDeGenesQueSofreraoCrossover = 0.5;
-        taxaDeInidviduosDaPopulacaoQueSofreraoCrossover = 1;
+        taxaDeIndviduosDaPopulacaoQueSofreraoCrossover = 1;
 
         // Inicializando variáveis da mutação
         porcentagemDeCromossomosQueVaiSofrerMutacao = 0.2;
@@ -286,10 +286,7 @@ public class GeneticAlgorithmStudents {
         System.out.println(" ");
         System.out.println("=================================================");
         System.out.println("Achou a solução ótima. Ela corresponde ao cromossomo: "+ melhor);
-        System.out.println("Solução Decodificada: ");
-        for (int i=0; i<populacao[melhor].length; i++){
-            System.out.print(populacao[melhor][i] + ", ");
-        }
+        printSolucaoDecodificada(melhor);
     }
 
     public static void paradaPorRepeticao(int melhor){
@@ -297,9 +294,12 @@ public class GeneticAlgorithmStudents {
         System.out.println(" ");
         System.out.println("=================================================");
         System.out.println("Parou a execução, pois ficou repetindo a mesma solução. Essa solução corresponde ao cromossomo: "+ melhor);
-        System.out.println("Solução Decodificada: ");
-        for (int i=0; i<populacao[melhor].length; i++){
-            System.out.print(populacao[melhor][i] + ", ");
+        printSolucaoDecodificada(melhor);
+    }
+
+    public static void printSolucaoDecodificada (int melhor){
+        for (int i=0; i<populacao[melhor].length-1; i++){
+            System.out.println("Aluno A" + (i+1) + " com Aluno B" + (populacao[melhor][i]+1));
         }
     }
 
