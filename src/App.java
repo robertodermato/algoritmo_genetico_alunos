@@ -19,20 +19,15 @@ public class App {
     private GeneticAlgorithmStudents algoritmoEStudantes;
 
     public App() {
-        //readSource("duplos4.txt");
+        readSource("duplos4.txt");
         //readSource("duplos10.txt");
         //readSource("duplos20.txt");
-        readSource("duplos50.txt");
+        //readSource("duplos50.txt");
         System.out.println("Tamanho da turma é: " + tamanhoDaTurma);
-
-        //inicializa atributos
-        preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
-        preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
-
 
         algoritmoEStudantes = new GeneticAlgorithmStudents();
         //apagar depois
-        algoritmoEStudantes.runGenerations();
+        //algoritmoEStudantes.runGenerations();
 
 
         fillDataInApp();
@@ -94,8 +89,6 @@ public class App {
 
     /*
     public static void populaTurmaaleatoria(){
-
-
         preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 3; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 1;
         preferenciasTurmaA [1][0] = 2; preferenciasTurmaA [1][1] = 1; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
         preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
@@ -124,15 +117,59 @@ public class App {
 
         try (BufferedReader reader = Files.newBufferedReader(path1.getFileName(), Charset.forName("utf8"))) {
             String line = null;
+            int nextA = 0;
+            int previousA = -1;
+            int nextB = 0;
+            int previousB = -1;
+            int nextSpace = 0;
+            String strPreferenciaAlunoA;
+            String strPreferenciaAlunoB;
+            Integer preferenciaAlunoA;
+            Integer preferenciaAlunoB;
 
             tamanhoDaTurma = Integer.parseInt(reader.readLine().trim());
 
-            while ((line = reader.readLine()) != null) {
+            //inicializa atributos
+            preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
+            preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
 
-                if (!line.isEmpty()) {
-                    line = line.trim();
+            // Popula array de preferências da turma B
+            System.out.println("Preferencia A");
+            for (int i=0; i<tamanhoDaTurma; i++){
+                line = reader.readLine();
+                System.out.println(line);
+                previousB=-1;
+                for (int j=0; j<tamanhoDaTurma; j++) {
+                    nextB = line.indexOf("B", previousB + 1);
+                    nextSpace = line.indexOf(" ", nextB);
+                    //System.out.println("Índice do primeiro B: " + previousB + " Proximo B: " + nextB + " Proximo espaço: " + nextSpace);
+                    strPreferenciaAlunoA = line.substring(nextB+1, nextSpace);
+                    preferenciaAlunoA = Integer.parseInt(strPreferenciaAlunoA);
+                    //System.out.println( "Preferencia aluno A: " + preferenciaAlunoA + " Prefernecias tamanho:" + preferenciasTurmaA.length);
+                    preferenciasTurmaA[i][j] = preferenciaAlunoA;
+                    previousB = nextB;
                 }
             }
+            printMatriz(preferenciasTurmaA);
+
+            // Popula array de preferências da turma B
+            System.out.println("Preferencia B");
+            for (int i=0; i<tamanhoDaTurma; i++){
+                line = reader.readLine();
+                System.out.println(line);
+                previousA=-1;
+                for (int j=0; j<tamanhoDaTurma; j++) {
+                    nextA = line.indexOf("A", previousA + 1);
+                    nextSpace = line.indexOf(" ", nextA);
+                    //System.out.println("Índice do primeiro A: " + previousA + " Proximo A: " + nextA + " Proximo espaço: " + nextSpace);
+                    strPreferenciaAlunoB = line.substring(nextA+1, nextSpace);
+                    preferenciaAlunoB = Integer.parseInt(strPreferenciaAlunoB);
+                    //System.out.println( "Preferencia aluno B: " + preferenciaAlunoB + " Prefernecias tamanho:" + preferenciasTurmaB.length);
+                    preferenciasTurmaB[i][j] = preferenciaAlunoB;
+                    previousA = nextA;
+                }
+            }
+            printMatriz(preferenciasTurmaB);
 
 
         } catch (NoSuchFileException x) {
@@ -146,4 +183,16 @@ public class App {
     private void populaLista(){
         //System.out.println("\nForam adicionados " + " na turma A e x alunos na turma B.");
     }
+
+    public void printMatriz(Integer [][] matriz) {
+        System.out.println("======= Matriz =======");
+        for (int i = 0; i < tamanhoDaTurma; i++) {
+            System.out.print("Aluno " + i + ": ");
+            for (int j=0; j < tamanhoDaTurma; j++) {
+                System.out.print(matriz[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+    }
+
 }
