@@ -19,15 +19,16 @@ public class App {
     private GeneticAlgorithmStudents algoritmoEStudantes;
 
     public App() {
-        readSource("duplos4.txt");
+        //readSource("duplos4.txt");
+        readSource("duplos4idela.txt");
         //readSource("duplos10.txt");
         //readSource("duplos20.txt");
         //readSource("duplos50.txt");
-        System.out.println("Tamanho da turma é: " + tamanhoDaTurma);
+        //System.out.println("Tamanho da turma é: " + tamanhoDaTurma);
 
-        algoritmoEStudantes = new GeneticAlgorithmStudents();
+        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB);
         //apagar depois
-        //algoritmoEStudantes.runGenerations();
+        algoritmoEStudantes.runGenerations();
 
 
         fillDataInApp();
@@ -137,7 +138,7 @@ public class App {
             System.out.println("Preferencia A");
             for (int i=0; i<tamanhoDaTurma; i++){
                 line = reader.readLine();
-                System.out.println(line);
+                //System.out.println(line);
                 previousB=-1;
                 for (int j=0; j<tamanhoDaTurma; j++) {
                     nextB = line.indexOf("B", previousB + 1);
@@ -146,7 +147,9 @@ public class App {
                     strPreferenciaAlunoA = line.substring(nextB+1, nextSpace);
                     preferenciaAlunoA = Integer.parseInt(strPreferenciaAlunoA);
                     //System.out.println( "Preferencia aluno A: " + preferenciaAlunoA + " Prefernecias tamanho:" + preferenciasTurmaA.length);
-                    preferenciasTurmaA[i][j] = preferenciaAlunoA;
+
+                    // Vai -1 aqui, pois a função de aptidão precisa disso, já que compara posição com o número fornecido e o primeiro número é o 0
+                    preferenciasTurmaA[i][j] = preferenciaAlunoA-1;
                     previousB = nextB;
                 }
             }
@@ -156,7 +159,7 @@ public class App {
             System.out.println("Preferencia B");
             for (int i=0; i<tamanhoDaTurma; i++){
                 line = reader.readLine();
-                System.out.println(line);
+                //System.out.println(line);
                 previousA=-1;
                 for (int j=0; j<tamanhoDaTurma; j++) {
                     nextA = line.indexOf("A", previousA + 1);
@@ -165,7 +168,9 @@ public class App {
                     strPreferenciaAlunoB = line.substring(nextA+1, nextSpace);
                     preferenciaAlunoB = Integer.parseInt(strPreferenciaAlunoB);
                     //System.out.println( "Preferencia aluno B: " + preferenciaAlunoB + " Prefernecias tamanho:" + preferenciasTurmaB.length);
-                    preferenciasTurmaB[i][j] = preferenciaAlunoB;
+
+                    // Vai -1 aqui, pois a função de aptidão precisa disso, já que compara posição com o número fornecido e o primeiro número é o 0
+                    preferenciasTurmaB[i][j] = preferenciaAlunoB-1;
                     previousA = nextA;
                 }
             }

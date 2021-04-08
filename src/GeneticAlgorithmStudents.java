@@ -28,10 +28,10 @@ public class GeneticAlgorithmStudents {
 
     private static int nivelDeVerbosidade;
     //
-    public GeneticAlgorithmStudents(){
+    public GeneticAlgorithmStudents(int tamanhoDaTurmaRecebido, Integer [][] preferenciasTurmaArecebido, Integer [][] preferenciasTurmaBrecebido){
 
-        quantidadeDeCromossomos = 11;
-        tamanhoDaTurma = 4;
+        quantidadeDeCromossomos = 10;
+        tamanhoDaTurma = tamanhoDaTurmaRecebido;
         //primos();
         fatorDeOdio = 1;
 
@@ -45,12 +45,13 @@ public class GeneticAlgorithmStudents {
 
         geracoesParaRodar = 300;
         nivelDeVerbosidade = 0;
-        pararAposXGeracoesRepetindoResultados = 20;
+        pararAposXGeracoesRepetindoResultados = 10;
 
-        preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
-        preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
+        preferenciasTurmaA = preferenciasTurmaArecebido;
+        preferenciasTurmaB = preferenciasTurmaBrecebido;
+
         //populaTurmaPerfeita();
-        populaTurmaaleatoria();
+        //populaTurmaaleatoria();
 
         // Aloca o espaço das populações
         populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
@@ -65,22 +66,15 @@ public class GeneticAlgorithmStudents {
 
     public static void runGenerations() {
         Random rand = new Random();
-        //populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
-        //intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         int melhor;
         int melhorGeracaoAnterior = -1;
         int contadorDeRepeticoesDeResultados = 0;
-
-        // Cria a população inicial
-        //init();
-
-        //crossoverOBX = new CrossoverOBX(taxaDeGenesQueSofreraoCrossover, populacao);
 
         // Roda as gerações
         for (int g=0; g<geracoesParaRodar; g++){
             System.out.println("\n\n===================== Geração: " + g + " =====================");
             calculaAptidao();
-            //printMatriz();
+            printMatriz();
 
             // Calcula qual o melhor cromossomo
             melhor = getBest();
@@ -247,15 +241,15 @@ public class GeneticAlgorithmStudents {
         for(int i = 0; i<quantidadeDeCromossomosqueVaiSofrerMutacao; i++){
             int quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao = (int) (populacao[0].length * porcentagemDeGenesQueVaoSofrerMutacao);
 
-            System.out.println("\nQuantidade de cromossomos que vai sofrer mutação é: " + quantidadeDeCromossomosqueVaiSofrerMutacao);
-            System.out.println("Quantidade de genes de um cromossomo que vai sofrer mutação é: " + quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao);
+            //System.out.println("\nQuantidade de cromossomos que vai sofrer mutação é: " + quantidadeDeCromossomosqueVaiSofrerMutacao);
+            //System.out.println("Quantidade de genes de um cromossomo que vai sofrer mutação é: " + quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao);
 
             int cromossomoEscolhidoParaSofrerMutacao = rand.nextInt(quantidadeDeCromossomos);
             // Evita que o elite sofra mutação
             while (cromossomoEscolhidoParaSofrerMutacao==0){
                 cromossomoEscolhidoParaSofrerMutacao = rand.nextInt(quantidadeDeCromossomos);
             }
-            System.out.println("Cromossomo escocolhido para mutação: " + cromossomoEscolhidoParaSofrerMutacao);
+            //System.out.println("Cromossomo escocolhido para mutação: " + cromossomoEscolhidoParaSofrerMutacao);
             // Ainda dá pra evitar que o mesmo cromossomo seja escolhido duas vezes. Update futuro.
 
             // Escolhe as posições que sofrerão troca
@@ -266,9 +260,11 @@ public class GeneticAlgorithmStudents {
                 posicao2 = rand.nextInt(tamanhoDaTurma);
             }
 
+            /*
             System.out.println("Posições escolhidas para mutação: " + posicao1 + " e " + posicao2);
             System.out.print("Cromossomo " + cromossomoEscolhidoParaSofrerMutacao + " antes da mutação: ");
             printCromossomoSemAptidao(cromossomoEscolhidoParaSofrerMutacao);
+             */
 
             // Faz a mutação
             int conteudoPosicao1 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1];
@@ -278,12 +274,11 @@ public class GeneticAlgorithmStudents {
             conteudoPosicao2 = conteudoIntermediario;
             populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1] = conteudoPosicao1;
             populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2] = conteudoPosicao2;
+            /*
             System.out.print("\nCromossomo " + cromossomoEscolhidoParaSofrerMutacao + " após a mutação: ");
             printCromossomoSemAptidao(cromossomoEscolhidoParaSofrerMutacao);
-
-
+             */
         }
-
     }
 
     public static void achouSolucao(int melhor){
