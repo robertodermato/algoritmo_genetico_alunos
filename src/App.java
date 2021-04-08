@@ -10,19 +10,29 @@ import java.util.Scanner;
 
 public class App {
     private final Scanner in = new Scanner(System.in);
-    //private GeneticAlgorithm algoritmo1;
-    private GeneticAlgorithmStudents algoritmo2;
 
-    // atributos private aqui
+    private int tamanhoDaTurma;
+
+    private Integer[][] preferenciasTurmaA;
+    private Integer[][] preferenciasTurmaB;
+
+    private GeneticAlgorithmStudents algoritmoEStudantes;
 
     public App() {
-        //inicializa atributos
-        //algoritmo1 = new GeneticAlgorithm();
-        //readSource();
-        algoritmo2 = new GeneticAlgorithmStudents();
+        //readSource("duplos4.txt");
+        //readSource("duplos10.txt");
+        //readSource("duplos20.txt");
+        readSource("duplos50.txt");
+        System.out.println("Tamanho da turma é: " + tamanhoDaTurma);
 
+        //inicializa atributos
+        preferenciasTurmaA = new Integer[tamanhoDaTurma][tamanhoDaTurma];
+        preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
+
+
+        algoritmoEStudantes = new GeneticAlgorithmStudents();
         //apagar depois
-        algoritmo2.runGenerations();
+        algoritmoEStudantes.runGenerations();
 
 
         fillDataInApp();
@@ -75,48 +85,62 @@ public class App {
     }
 
     private void mostraExecucaoPassoPasso(){
-        algoritmo2.runGenerations();
+        algoritmoEStudantes.runGenerations();
     }
 
     private void mostraApenasResultadoFinal(){
 
     }
 
+    /*
+    public static void populaTurmaaleatoria(){
+
+
+        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 3; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 1;
+        preferenciasTurmaA [1][0] = 2; preferenciasTurmaA [1][1] = 1; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
+        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
+        preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 1; preferenciasTurmaA [3][2] = 0; preferenciasTurmaA [3][3] = 2;
+
+        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
+        preferenciasTurmaB [1][0] = 0; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 1;
+        preferenciasTurmaB [2][0] = 0; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 2; preferenciasTurmaB [2][3] = 1;
+        preferenciasTurmaB [3][0] = 0; preferenciasTurmaB [3][1] = 3; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
+    }
+     */
+
     private void fillDataInApp(){
         populaLista();
     }
 
     /**
-     * Reads the SOURCE file and turns it into a single String for easier manipulation
+     * Reads the SOURCE file and populates de students preferences
      *
      * @param source                    the SOURCE file
      * @exception NoSuchFileException   on file not found error
      * @exception IOException           on any other error
-     * @return                          a String with the content of the SOURCE file
      */
-    private String readSource(String source) {
+    private void readSource(String source) {
         Path path1 = Paths.get(source);
-        String sourceStringyfied ="";
 
         try (BufferedReader reader = Files.newBufferedReader(path1.getFileName(), Charset.forName("utf8"))) {
             String line = null;
+
+            tamanhoDaTurma = Integer.parseInt(reader.readLine().trim());
 
             while ((line = reader.readLine()) != null) {
 
                 if (!line.isEmpty()) {
                     line = line.trim();
-                    sourceStringyfied = sourceStringyfied + line;
                 }
             }
 
-            return sourceStringyfied;
 
         } catch (NoSuchFileException x) {
             System.err.format("SOURCE File not found.\n", x);
         } catch (IOException x) {
             System.err.format("I/O Error %s%n\n", x);
         }
-        return null;
+
     }
 
     private void populaLista(){
