@@ -18,20 +18,12 @@ public class App {
 
     private GeneticAlgorithmStudents algoritmoEStudantes;
 
-    public App() {
-        //readSource("duplos4.txt");
-        readSource("duplos4idela.txt");
-        //readSource("duplos10.txt");
-        //readSource("duplos20.txt");
-        //readSource("duplos50.txt");
-        //System.out.println("Tamanho da turma é: " + tamanhoDaTurma);
+    public App(String arquivo) {
+        readSource(arquivo);
 
         algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB);
         //apagar depois
         algoritmoEStudantes.runGenerations();
-
-
-        fillDataInApp();
     }
 
     public void run() {
@@ -101,10 +93,6 @@ public class App {
         preferenciasTurmaB [3][0] = 0; preferenciasTurmaB [3][1] = 3; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
     }
      */
-
-    private void fillDataInApp(){
-        populaLista();
-    }
 
     /**
      * Reads the SOURCE file and populates de students preferences
@@ -182,11 +170,6 @@ public class App {
         } catch (IOException x) {
             System.err.format("I/O Error %s%n\n", x);
         }
-
-    }
-
-    private void populaLista(){
-        //System.out.println("\nForam adicionados " + " na turma A e x alunos na turma B.");
     }
 
     public void printMatriz(Integer [][] matriz) {

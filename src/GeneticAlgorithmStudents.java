@@ -30,7 +30,7 @@ public class GeneticAlgorithmStudents {
     //
     public GeneticAlgorithmStudents(int tamanhoDaTurmaRecebido, Integer [][] preferenciasTurmaArecebido, Integer [][] preferenciasTurmaBrecebido){
 
-        quantidadeDeCromossomos = 10;
+        quantidadeDeCromossomos = 100;
         tamanhoDaTurma = tamanhoDaTurmaRecebido;
         //primos();
         fatorDeOdio = 1;
@@ -45,7 +45,7 @@ public class GeneticAlgorithmStudents {
 
         geracoesParaRodar = 300;
         nivelDeVerbosidade = 0;
-        pararAposXGeracoesRepetindoResultados = 10;
+        pararAposXGeracoesRepetindoResultados = 20;
 
         preferenciasTurmaA = preferenciasTurmaArecebido;
         preferenciasTurmaB = preferenciasTurmaBrecebido;
@@ -74,7 +74,7 @@ public class GeneticAlgorithmStudents {
         for (int g=0; g<geracoesParaRodar; g++){
             System.out.println("\n\n===================== Geração: " + g + " =====================");
             calculaAptidao();
-            printMatriz();
+            //printMatriz();
 
             // Calcula qual o melhor cromossomo
             melhor = getBest();
