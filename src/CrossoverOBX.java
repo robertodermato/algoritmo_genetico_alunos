@@ -3,14 +3,16 @@ import java.util.*;
 
 public class CrossoverOBX {
 
-    private double crossoverRate;
+    private double taxaDeCromossomosQueSofreraoCrossover;
+    private double taxaDeGenesQueSofreraoCrossover;
     private Integer [][] populacaoParaCrossover;
     private Integer [][] populacaoCriadaComCrossover;
     int quantidadeDeCromossomos;
     int quantidadeDeGenes;
 
-    public CrossoverOBX(double taxaDeCrossover, Integer [][] populacaoRecebida) {
-        crossoverRate=taxaDeCrossover;
+    public CrossoverOBX(double taxaDeCromossomosQuesofreraoCrossoverRecebida, double taxaDeGenesQueSofreraoCrossoverRecebida, Integer [][] populacaoRecebida) {
+        taxaDeCromossomosQueSofreraoCrossover = taxaDeCromossomosQuesofreraoCrossoverRecebida;
+        taxaDeGenesQueSofreraoCrossover = taxaDeGenesQueSofreraoCrossoverRecebida;
         populacaoParaCrossover=populacaoRecebida;
         quantidadeDeCromossomos=populacaoParaCrossover.length;
         quantidadeDeGenes=populacaoParaCrossover[0].length;
@@ -18,6 +20,7 @@ public class CrossoverOBX {
     }
 
     public Integer [][] crossover(){
+        Random rand = new Random();
 
         // Mantém o cromossomo Elite
         populacaoCriadaComCrossover[0] = populacaoParaCrossover[0];
@@ -47,7 +50,7 @@ public class CrossoverOBX {
         Random rng = new Random();
 
         // Calcula em quantos genes ocorrerá o crossover
-        long crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
+        long crossoverRateSum = Math.round((quantidadeDeGenes -1) * taxaDeGenesQueSofreraoCrossover);
 
         /*
         System.out.println("");
@@ -81,7 +84,7 @@ public class CrossoverOBX {
             // Se chegou ao final do loop e ainda não atingiu o número necessário de genes selecionados para o crossover, reseta o vetor e reinicia o loop
             if (i==quantidadeDeGenes-2 && crossoverRateSum!=0) {
                 i=-1;
-                crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
+                crossoverRateSum = Math.round((quantidadeDeGenes -1) * taxaDeGenesQueSofreraoCrossover);
                 for (int j=0; j<posicoesDoCrossover.length;j++){
                     posicoesDoCrossover[j]=0;
                 }
@@ -127,7 +130,7 @@ public class CrossoverOBX {
          */
 
         // Cria um vetor com os elementos que sofrerão crossover
-        crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
+        crossoverRateSum = Math.round((quantidadeDeGenes -1) * taxaDeGenesQueSofreraoCrossover);
         Integer [] elementosDoPai1 = new Integer[(int) crossoverRateSum];
 
         int k=0;
@@ -156,7 +159,7 @@ public class CrossoverOBX {
          */
 
         // Cria um vetor com os elementos que sofrerão crossover
-        crossoverRateSum = Math.round((quantidadeDeGenes -1) * crossoverRate);
+        crossoverRateSum = (long) Math.ceil((quantidadeDeGenes -1) * taxaDeGenesQueSofreraoCrossover);
         Integer [] elementosDoPai2 = new Integer[(int) crossoverRateSum];
         //System.out.println("Pai 2 tem um array com " + elementosDoPai2.length + " elementos");
 
@@ -254,7 +257,7 @@ public class CrossoverOBX {
 
         /*
         System.out.println("");
-        System.out.print("De forma organizada, os genes do pai 2, ocupam as seguines posições no pai 1: ");
+        System.out.print("De forma organizada, os genes do pai 2, ocupam as seguintes posições no pai 1: ");
         for (int i=0; i<posicoesGenesPai2noPai1.length; i++){
             System.out.print(posicoesGenesPai2noPai1[i] + ", ");
         }
@@ -293,10 +296,19 @@ public class CrossoverOBX {
         */
 
         int indiceParaFilho2 = indiceParaFilho1+1;
+
+        // Coloca os filhos na nova população, se o número sorteado for maior que a taxa de crossver mantém os pais e não faz crossver
         //System.out.println("colocando os filhos na nova população");
         //System.out.println("colocado os filhos " + indiceParaFilho1 + " e " + indiceParaFilho2);
-        populacaoCriadaComCrossover[indiceParaFilho1] = son1;
-        if (indiceParaFilho2< quantidadeDeCromossomos) populacaoCriadaComCrossover[indiceParaFilho2] = son2;
+        double sorteado = rng.nextDouble();
+        if (sorteado > taxaDeCromossomosQueSofreraoCrossover) {
+            populacaoCriadaComCrossover[indiceParaFilho1] = son1;
+            if (indiceParaFilho2 < quantidadeDeCromossomos) populacaoCriadaComCrossover[indiceParaFilho2] = son2;
+        }
+        else{
+            populacaoCriadaComCrossover[indiceParaFilho1] = parent1;
+            if (indiceParaFilho2 < quantidadeDeCromossomos) populacaoCriadaComCrossover[indiceParaFilho2] = parent2;
+        }
 
     }
 

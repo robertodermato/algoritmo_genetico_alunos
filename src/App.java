@@ -18,10 +18,28 @@ public class App {
 
     private GeneticAlgorithmStudents algoritmoEStudantes;
 
+    private int quantidadeDeCromossomos;
+
+    private double taxaDeGenesQueSofreraoCrossover;
+    private double taxaDeCromossomosQueSofreraoCrossover;
+
+    private double porcentagemDeCromossomosQueVaiSofrerMutacao;
+    private double porcentagemDeGenesQueVaoSofrerMutacao;
+
     public App(String arquivo) {
         readSource(arquivo);
 
-        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB);
+        quantidadeDeCromossomos = 500;
+
+        taxaDeCromossomosQueSofreraoCrossover = 0.9;
+        taxaDeGenesQueSofreraoCrossover = 0.5;
+
+        porcentagemDeCromossomosQueVaiSofrerMutacao = 0.8;
+        porcentagemDeGenesQueVaoSofrerMutacao = 0.05;
+
+        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
+                quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
+                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao);
         //apagar depois
         algoritmoEStudantes.runGenerations();
     }
