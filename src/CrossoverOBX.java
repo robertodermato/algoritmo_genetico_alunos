@@ -25,6 +25,13 @@ public class CrossoverOBX {
         // Mantém o cromossomo Elite
         populacaoCriadaComCrossover[0] = populacaoParaCrossover[0];
 
+        /*
+        System.out.print("População recebida para croossover com cromossomo 0: ");
+        for (int i=0; i<populacaoParaCrossover[0].length; i++){
+            System.out.print(populacaoParaCrossover[0][i] + " ");
+        }
+         */
+
         for (int j = 1; j< quantidadeDeCromossomos; j=j+2){
             int cromossomoPai1 = torneio();
             int cromossomoPai2 = torneio();
@@ -41,6 +48,13 @@ public class CrossoverOBX {
 
             doCrossoverOBX(j, cromossomoPai1, cromossomoPai2);
         }
+
+        /*
+        System.out.print("\nPopulação enviada do croossover com cromossomo 0: ");
+        for (int i=0; i<populacaoCriadaComCrossover[0].length; i++){
+            System.out.print(populacaoCriadaComCrossover[0][i] + " ");
+        }
+         */
 
         return populacaoCriadaComCrossover;
 

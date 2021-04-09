@@ -26,10 +26,16 @@ public class App {
     private double porcentagemDeCromossomosQueVaiSofrerMutacao;
     private double porcentagemDeGenesQueVaoSofrerMutacao;
 
+    private static int geracoesParaRodar;
+    private static int pararAposXGeracoesRepetindoResultados;
+
+    private static int nivelDeVerbosidade;
+
+    // Construtor. Defina as variáveis aqui
     public App(String arquivo) {
         readSource(arquivo);
 
-        quantidadeDeCromossomos = 500;
+        quantidadeDeCromossomos = 30;
 
         taxaDeCromossomosQueSofreraoCrossover = 0.9;
         taxaDeGenesQueSofreraoCrossover = 0.5;
@@ -37,9 +43,15 @@ public class App {
         porcentagemDeCromossomosQueVaiSofrerMutacao = 0.8;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.05;
 
+        geracoesParaRodar = 100;
+        pararAposXGeracoesRepetindoResultados = 100;
+
+        nivelDeVerbosidade = 0;
+
         algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
                 quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
-                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao);
+                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
+                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
         //apagar depois
         algoritmoEStudantes.runGenerations();
     }

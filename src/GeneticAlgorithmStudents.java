@@ -23,14 +23,17 @@ public class GeneticAlgorithmStudents {
     private static int geracoesParaRodar;
     private static int pararAposXGeracoesRepetindoResultados;
 
+    private static int nivelDeVerbosidade;
+
     private static CrossoverOBX crossoverOBX;
 
-    private static int nivelDeVerbosidade;
+
     //
     public GeneticAlgorithmStudents(int tamanhoDaTurmaRecebido, Integer [][] preferenciasTurmaArecebido, Integer [][] preferenciasTurmaBrecebido,
                                     int quantidadeDeCromossomosRecebida, double taxaDeIndviduosDaPopulacaoQueSofreraoCrossoverRecebido,
                                     double taxaDeGenesQueSofreraoCrossoverRecebida, double porcentagemDeCromossomosQueVaiSofrerMutacaoRecebida,
-                                    double porcentagemDeGenesQueVaoSofrerMutacaoRecebida){
+                                    double porcentagemDeGenesQueVaoSofrerMutacaoRecebida, int geracoesParaRodarRecebida,
+                                    int pararAposXGeracoesRepetindoResultadosRecebido, int nivelDeVerbosidaderecebido){
 
         quantidadeDeCromossomos = quantidadeDeCromossomosRecebida;
         tamanhoDaTurma = tamanhoDaTurmaRecebido;
@@ -43,9 +46,9 @@ public class GeneticAlgorithmStudents {
         porcentagemDeCromossomosQueVaiSofrerMutacao = porcentagemDeCromossomosQueVaiSofrerMutacaoRecebida;
         porcentagemDeGenesQueVaoSofrerMutacao = porcentagemDeGenesQueVaoSofrerMutacaoRecebida;
 
-        geracoesParaRodar = 300;
-        nivelDeVerbosidade = 0;
-        pararAposXGeracoesRepetindoResultados = 100;
+        geracoesParaRodar = geracoesParaRodarRecebida;
+        nivelDeVerbosidade = nivelDeVerbosidaderecebido;
+        pararAposXGeracoesRepetindoResultados = pararAposXGeracoesRepetindoResultadosRecebido;
 
         preferenciasTurmaA = preferenciasTurmaArecebido;
         preferenciasTurmaB = preferenciasTurmaBrecebido;
@@ -75,12 +78,14 @@ public class GeneticAlgorithmStudents {
             calculaAptidao();
 
             // Mostra a população
-            //printMatriz();
+            System.out.println("Matriz após aptidão calculada");
+            printMatriz();
 
             // Calcula qual o melhor cromossomo
             melhor = getBest();
             System.out.print("Pelo método de Elitismo, o melhor cromossomo encontrado é o " + melhor + " - ");
             printCromossomoComAptidao(melhor);
+            printMatriz();
 
             // Testa se o melhor resultado está se repetindo
             if (melhor==melhorGeracaoAnterior){
@@ -104,13 +109,73 @@ public class GeneticAlgorithmStudents {
                 break;
             }
 
+            /*
+            Integer [] cromossomoBuscado;
+            printMatriz();
+            System.out.println("antes do crossover");
+            System.out.print("melhor: ");
+            printCromossomoComAptidao(melhor);
+
+            cromossomoBuscado = populacao[0];
+            System.out.print("\ncromossomo 0 da população: ");
+            for (int i=0; i<populacao[0].length; i++){
+                System.out.print(populacao[0][i] + " ");
+            }
+
+            cromossomoBuscado = intermediaria[0];
+            System.out.print("\ncromossomo 0 da intermediaria: ");
+            for (int i=0; i<intermediaria[0].length; i++){
+                System.out.print(intermediaria[0][i] + " ");
+            }
+             */
+
             // Faz o crossover
             intermediaria = crossoverOBX.crossover();
 
-            // Faz a mutação
-            mutacao();
+            /*
+            System.out.println("\ndepois do croosover");
+            System.out.print("melhor: ");
+            printCromossomoComAptidao(melhor);
+
+            cromossomoBuscado = populacao[0];
+            System.out.print("\ncromossomo 0 da população: ");
+            for (int i=0; i<populacao[0].length; i++){
+                System.out.print(populacao[0][i] + " ");
+            }
+            */
+
+
+            System.out.print("\ncromossomo 0 da intermediaria após o croosover: ");
+            for (int i=0; i<intermediaria[0].length; i++){
+                System.out.print(intermediaria[0][i] + " ");
+            }
 
             populacao = intermediaria;
+
+            System.out.print("\ncromossomo 0 da população após intermediaria virar pop: ");
+            for (int i=0; i<populacao[0].length; i++){
+                System.out.print(populacao[0][i] + " ");
+            }
+
+            // Faz a mutação
+            mutacao();
+            /*
+            System.out.println("\ndepois da mutação");
+            System.out.print("melhor: ");
+            printCromossomoComAptidao(melhor);
+
+            cromossomoBuscado = populacao[0];
+            System.out.print("\ncromossomo 0 da população: ");
+            for (int i=0; i<populacao[0].length; i++){
+                System.out.print(populacao[0][i] + " ");
+            }
+
+            cromossomoBuscado = intermediaria[0];
+            System.out.print("\ncromossomo 0 da intermediaria: ");
+            for (int i=0; i<intermediaria[0].length; i++){
+                System.out.print(intermediaria[0][i] + " ");
+            }
+             */
 
 
 
@@ -163,12 +228,13 @@ public class GeneticAlgorithmStudents {
 
     public static void printMatriz() {
         int j = 0;
+        System.out.println(" ");
         for (int i = 0; i < quantidadeDeCromossomos; i++) {
-            //System.out.print("C: " + i + " - ");
+            System.out.print("Cromossomo " + i + " - ");
             for (j=0; j < tamanhoDaTurma; j++) {
                 System.out.print(populacao[i][j] + " ");
             }
-            System.out.println("F: " + populacao[i][j]);
+            System.out.println("Aptidão: " + populacao[i][j]);
         }
     }
 
@@ -234,8 +300,13 @@ public class GeneticAlgorithmStudents {
             }
         }
 
-        for(int i = 0; i < tamanhoDaTurma; i++)
+        System.out.print("\ncolocando na intermediaria 0 o melhor: ");
+
+        for(int i = 0; i < tamanhoDaTurma; i++) {
             intermediaria[0][i] = populacao[linha][i];
+            System.out.print(intermediaria[0][i] + " ");
+        }
+        System.out.println("");
 
         return linha;
     }
@@ -245,17 +316,28 @@ public class GeneticAlgorithmStudents {
         int quantidadeDeCromossomosqueVaiSofrerMutacao = (int) (Math.ceil(populacao.length * porcentagemDeCromossomosQueVaiSofrerMutacao));
         int quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao = (int) (Math.ceil(populacao[0].length * porcentagemDeGenesQueVaoSofrerMutacao));
 
+        System.out.print("\nCromossomo 0 da popualçao antes mutação: ");
+        for (int i=0; i<populacao[0].length; i++){
+            System.out.print(populacao[0][i] + " ");
+        }
+
+
+
         for(int i = 0; i<quantidadeDeCromossomosqueVaiSofrerMutacao; i++){
             //System.out.println("\nQuantidade de cromossomos que vai sofrer mutação é: " + quantidadeDeCromossomosqueVaiSofrerMutacao);
             //System.out.println("Quantidade de genes de um cromossomo que vai sofrer mutação é: " + quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao);
 
-            int cromossomoEscolhidoParaSofrerMutacao = rand.nextInt(quantidadeDeCromossomos);
+            int cromossomoEscolhidoParaSofrerMutacao = (rand.nextInt(quantidadeDeCromossomos));
             // Evita que o elite sofra mutação
+            System.out.println("\nAntes do while, o cromosso escolhido para mutação dfoi o " + cromossomoEscolhidoParaSofrerMutacao);
             while (cromossomoEscolhidoParaSofrerMutacao==0){
                 cromossomoEscolhidoParaSofrerMutacao = rand.nextInt(quantidadeDeCromossomos);
             }
+
+            System.out.println("\nDepois do while, o cromosso escolhido para mutação dfoi o " + cromossomoEscolhidoParaSofrerMutacao);
             //System.out.println("Cromossomo escocolhido para mutação: " + cromossomoEscolhidoParaSofrerMutacao);
             // Ainda dá pra evitar que o mesmo cromossomo seja escolhido duas vezes. Update futuro.
+
 
             // Faz mutação em n genes no cromossomo escolhido
             for (int j=0; j<quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao; j++) {
@@ -267,25 +349,52 @@ public class GeneticAlgorithmStudents {
                     posicao2 = rand.nextInt(tamanhoDaTurma);
                 }
 
-            /*
-            System.out.println("Posições escolhidas para mutação: " + posicao1 + " e " + posicao2);
-            System.out.print("Cromossomo " + cromossomoEscolhidoParaSofrerMutacao + " antes da mutação: ");
-            printCromossomoSemAptidao(cromossomoEscolhidoParaSofrerMutacao);
-             */
+                System.out.print("\nCromossomo 0 da popualçao dentro do loop de genes : ");
+                for (int k=0; k<populacao[0].length; k++){
+                    System.out.print(populacao[0][k] + " ");
+                }
+
+                //System.out.println("Posições escolhidas para mutação: " + posicao1 + " e " + posicao2);
+                //System.out.print("Cromossomo " + cromossomoEscolhidoParaSofrerMutacao + " antes da mutação: ");
+                //printCromossomoSemAptidao(cromossomoEscolhidoParaSofrerMutacao);
 
                 // Faz a mutação
                 int conteudoPosicao1 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1];
+                System.out.println("\n" + cromossomoEscolhidoParaSofrerMutacao + "conteudo: " + conteudoPosicao1);
                 int conteudoPosicao2 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2];
+                System.out.println(cromossomoEscolhidoParaSofrerMutacao + "conteudo: " + conteudoPosicao2);
                 int conteudoIntermediario = conteudoPosicao1;
                 conteudoPosicao1 = conteudoPosicao2;
                 conteudoPosicao2 = conteudoIntermediario;
+                System.out.print("\nCromossomo 0 da popualçao dentro do loop de genes antes cont1 a mutação: ");
+                for (int k=0; k<populacao[0].length; k++){
+                    System.out.print(populacao[0][k] + " ");
+                }
                 populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1] = conteudoPosicao1;
+                System.out.println(cromossomoEscolhidoParaSofrerMutacao + "conteudo: " + conteudoPosicao1);
+                System.out.print("\nCromossomo 0 da popualçao dentro do loop de genes antescont2 a mutação: ");
+                for (int k=0; k<populacao[0].length; k++){
+                    System.out.print(populacao[0][k] + " ");
+                }
                 populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2] = conteudoPosicao2;
-            /*
-            System.out.print("\nCromossomo " + cromossomoEscolhidoParaSofrerMutacao + " após a mutação: ");
-            printCromossomoSemAptidao(cromossomoEscolhidoParaSofrerMutacao);
-             */
+                System.out.println(cromossomoEscolhidoParaSofrerMutacao + "conteudo: " + conteudoPosicao2);
+
+                System.out.print("\nCromossomo 0 da popualçao dentro do loop de genes após a mutação: ");
+                for (int k=0; k<populacao[0].length; k++){
+                    System.out.print(populacao[0][k] + " ");
+                }
+
+            //System.out.print("\nCromossomo " + cromossomoEscolhidoParaSofrerMutacao + " após a mutação: ");
+            //printCromossomoComAptidao(cromossomoEscolhidoParaSofrerMutacao);
+
             }
+
+
+        }
+
+        System.out.print("\nCromossomo 0 da popualçao apos mutação: ");
+        for (int i=0; i<populacao[0].length; i++){
+            System.out.print(populacao[0][i] + " ");
         }
     }
 
