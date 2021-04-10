@@ -119,18 +119,24 @@ public class GeneticAlgorithmStudents {
                 System.out.print(intermediaria[0][i] + " ");
             }
 
+            /*
             Integer [] cromosssomoZeroInt = new Integer[intermediaria[0].length];
             for (int z=0; z< intermediaria[0].length; z++){
                 cromosssomoZeroInt[z]=intermediaria[0][z];
             }
 
+             */
+
 
             // Faz o crossover
             intermediaria = crossoverOBX.crossover();
 
+            /*
             for (int z=0; z<intermediaria[0].length; z++){
                 intermediaria[0][z] = cromosssomoZeroInt[z];
             }
+
+             */
 
 
             System.out.println("\ndepois do croosover");
@@ -160,15 +166,18 @@ public class GeneticAlgorithmStudents {
                 System.out.print(populacao[0][k] + " ");
             }
 
+            /*
             Integer [] cromossomoZero = new Integer[populacao[0].length];
             for (int z=0; z<cromossomoZero.length; z++){
                 cromossomoZero[z]=populacao[0][z];
             }
 
+             */
+
             // Faz a mutação
             mutacaoComBug();
 
-            populacao[0] = cromossomoZero;
+            //populacao[0] = cromossomoZero;
             System.out.print("\nCromossomo 0 da populaçao após a mutação: ");
             for (int k=0; k<populacao[0].length; k++){
                 System.out.print(populacao[0][k] + " ");
@@ -311,10 +320,17 @@ public class GeneticAlgorithmStudents {
             }
         }
 
+        Integer [] cromossomoInt = new Integer [populacao[0].length];
+
+        for (int i=0; i<cromossomoInt.length; i++){
+            cromossomoInt[i] = populacao[linha][i];
+        }
+
         // Coloca o melhor na população intermediária
         //System.out.print("\ncolocando na intermediaria 0 o melhor: ");
         for(int i = 0; i < tamanhoDaTurma; i++) {
-            intermediaria[0][i] = populacao[linha][i];
+            intermediaria[0][i]=cromossomoInt[i];
+            //intermediaria[0][i] = populacao[linha][i];
             //System.out.print(intermediaria[0][i] + " ");
         }
         //System.out.println("");

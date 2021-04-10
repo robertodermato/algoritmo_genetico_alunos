@@ -2,7 +2,7 @@ public class GeraArquivosParaTeste {
 
     public static void main(String[] args) {
 
-        int tamanhoDaTurma = 100;
+        int tamanhoDaTurma = 250;
         System.out.println(tamanhoDaTurma);
 
         //Turma A
