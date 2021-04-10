@@ -35,7 +35,7 @@ public class App {
     public App(String arquivo) {
         readSource(arquivo);
 
-        quantidadeDeCromossomos = 30;
+        quantidadeDeCromossomos = 1500;
 
         taxaDeCromossomosQueSofreraoCrossover = 0.9;
         taxaDeGenesQueSofreraoCrossover = 0.5;
@@ -43,7 +43,7 @@ public class App {
         porcentagemDeCromossomosQueVaiSofrerMutacao = 0.8;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.05;
 
-        geracoesParaRodar = 100;
+        geracoesParaRodar = 1600;
         pararAposXGeracoesRepetindoResultados = 100;
 
         nivelDeVerbosidade = 0;
