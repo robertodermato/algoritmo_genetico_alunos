@@ -35,16 +35,16 @@ public class App {
     public App(String arquivo) {
         readSource(arquivo);
 
-        quantidadeDeCromossomos = 500;
+        quantidadeDeCromossomos = 10;
 
-        taxaDeCromossomosQueSofreraoCrossover = 0.9;
+        taxaDeCromossomosQueSofreraoCrossover = 0.8;
         taxaDeGenesQueSofreraoCrossover = 0.5;
 
         porcentagemDeCromossomosQueVaiSofrerMutacao = 0.8;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.1;
 
-        geracoesParaRodar = 3600;
-        pararAposXGeracoesRepetindoResultados = 600;
+        geracoesParaRodar = 200;
+        pararAposXGeracoesRepetindoResultados = 100;
 
         nivelDeVerbosidade = 0;
 
