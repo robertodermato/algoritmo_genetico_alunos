@@ -109,15 +109,18 @@ public class GeneticAlgorithmStudents {
                 break;
             }
 
+            /*
             System.out.println("\nPopulação antes do crossover");
-
             printMatrizDaPopulacao();
+             */
 
             // Faz o crossover
             intermediaria = crossoverOBX.crossover();
 
+            /*
             System.out.println("Intermediaria após do crossover");
             printMatrizDaIntermediaria();
+             */
 
 
 
@@ -129,19 +132,21 @@ public class GeneticAlgorithmStudents {
 
             //populacao = intermediaria;
 
+            /*
             System.out.println("Agora população é igual a intermediaria");
             printMatrizDaPopulacao();
-
-
-
             System.out.println("População antes da mutação");
             printMatrizDaPopulacao();
+             */
 
             // Faz a mutação
             mutacaoComBug();
 
+            /*
             System.out.println("População antes da mutação");
             printMatrizDaPopulacao();
+             */
+
             /*
             //populacao[0] = cromossomoZero;
             System.out.print("\nCromossomo 0 da populaçao após a mutação: ");
