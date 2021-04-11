@@ -92,37 +92,6 @@ public class GeneticAlgorithmStudents {
             //printMatriz();
 
             if (testaSolucao(g)) break;
-/*
-            // Testa se o melhor resultado está se repetindo
-            if (melhor==melhorGeracaoAnterior){
-                contadorDeRepeticoesDeResultados = contadorDeRepeticoesDeResultados +1;
-                //System.out.println("contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
-                if (contadorDeRepeticoesDeResultados==pararAposXGeracoesRepetindoResultados){
-                    paradaPorRepeticao(melhor, g);
-                    break;
-                }
-            }
-            else{
-                contadorDeRepeticoesDeResultados=0;
-                //System.out.println("Zerou. contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
-            }
-
-            melhorGeracaoAnterior=melhor;
-
-            // Testa se achou solução ideal
-            if(populacao[melhor][tamanhoDaTurma]==0) {
-                achouSolucao(melhor, g);
-                break;
-            }
-
-            // Se chegou na última geração e não encontrou nenhuma das condições de parada,
-            // simplesmente mostra e melhor solução até o momento
-            if (g==(geracoesParaRodar-1)){
-                naoEncontrouCondicoesDeParada();
-                break;
-            }
-
- */
 
             /*
             System.out.println("\nPopulação antes do crossover");
@@ -138,15 +107,13 @@ public class GeneticAlgorithmStudents {
              */
 
 
-
+            // Como estamos usando variáveis estáticas precisamos faer isso para transportar os valores da intermediária
+            // para a população. simplesmente fazer populacao = intermediária não funcionaria
             for (int p=0; p<populacao.length; p++){
                 for (int q=0; q<populacao[0].length; q++){
                     populacao[p][q]=intermediaria[p][q];
                 }
             }
-
-            //populacao = intermediaria;
-
             /*
             System.out.println("Agora população é igual a intermediaria");
             printMatrizDaPopulacao();
