@@ -96,14 +96,13 @@ public class App {
     }
 
     private void mostraExecucaoPassoPasso(){
-
-        nivelDeVerbosidade = 0;
+        nivelDeVerbosidade = 1;
 
         algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
                 quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
                 porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
                 pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
-        //apagar depois
+
         algoritmoEStudantes.runGenerations();
     }
 
@@ -116,7 +115,6 @@ public class App {
                 pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
 
         algoritmoEStudantes.runGenerations();
-
     }
 
     /**

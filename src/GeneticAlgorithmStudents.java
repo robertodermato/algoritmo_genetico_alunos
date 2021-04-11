@@ -39,6 +39,7 @@ public class GeneticAlgorithmStudents {
                                     double porcentagemDeGenesQueVaoSofrerMutacaoRecebida, int geracoesParaRodarRecebida,
                                     int pararAposXGeracoesRepetindoResultadosRecebido, int nivelDeVerbosidaderecebido){
 
+        // Inicializando variáveis da população
         quantidadeDeCromossomos = quantidadeDeCromossomosRecebida;
         tamanhoDaTurma = tamanhoDaTurmaRecebido;
 
@@ -50,24 +51,27 @@ public class GeneticAlgorithmStudents {
         porcentagemDeCromossomosQueVaiSofrerMutacao = porcentagemDeCromossomosQueVaiSofrerMutacaoRecebida;
         porcentagemDeGenesQueVaoSofrerMutacao = porcentagemDeGenesQueVaoSofrerMutacaoRecebida;
 
+        // Inicializando variáveis das gerações e solução
         geracoesParaRodar = geracoesParaRodarRecebida;
-        nivelDeVerbosidade = nivelDeVerbosidaderecebido;
         pararAposXGeracoesRepetindoResultados = pararAposXGeracoesRepetindoResultadosRecebido;
         contadorDeRepeticoesDeResultados=0;
-
         melhorGeracaoAnterior=-1;
 
+        // Inicializando variável que vai definir o que é ou não mostrado na tela
+        nivelDeVerbosidade = nivelDeVerbosidaderecebido;
+
+        // Inicializando variáveis das preferências dos alunos
         preferenciasTurmaA = preferenciasTurmaArecebido;
         preferenciasTurmaB = preferenciasTurmaBrecebido;
 
-        // Aloca o espaço das populações
+        // Alocando o espaço das populações
         populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
 
-        // Cria a população inicial
-        init();
+        // Criando a população inicial
+        criaPopulacaoInicial();
 
-        // Inicializa o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
+        // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
         crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao);
 
         //primos();
@@ -82,14 +86,15 @@ public class GeneticAlgorithmStudents {
             calculaAptidao();
 
             // Mostra a população
-            //System.out.println("Matriz após aptidão calculada");
-            //printMatriz();
+            if (nivelDeVerbosidade>0) {
+                System.out.print("População após aptidão calculada");
+                printMatrizDaPopulacao();
+            }
 
             // Calcula qual o melhor cromossomo
             melhor = getBest();
             System.out.print("Pelo método de Elitismo, o melhor cromossomo encontrado é o " + melhor + " - ");
             printCromossomoComAptidao(melhor);
-            //printMatriz();
 
             if (testaSolucao(g)) break;
 
@@ -102,7 +107,7 @@ public class GeneticAlgorithmStudents {
             intermediaria = crossoverOBX.crossover();
 
             /*
-            System.out.println("Intermediaria após do crossover");
+            System.out.println("População após o crossover");
             printMatrizDaIntermediaria();
              */
 
@@ -114,51 +119,20 @@ public class GeneticAlgorithmStudents {
                     populacao[p][q]=intermediaria[p][q];
                 }
             }
-            /*
-            System.out.println("Agora população é igual a intermediaria");
-            printMatrizDaPopulacao();
-            System.out.println("População antes da mutação");
-            printMatrizDaPopulacao();
-             */
+
+            //System.out.println("População antes da mutação");
+            //printMatrizDaPopulacao();
 
             // Faz a mutação
             mutacao();
 
-            /*
-            System.out.println("População antes da mutação");
-            printMatrizDaPopulacao();
-             */
-
-            /*
-            //populacao[0] = cromossomoZero;
-            System.out.print("\nCromossomo 0 da populaçao após a mutação: ");
-            for (int k=0; k<populacao[0].length; k++){
-                System.out.print(populacao[0][k] + " ");
-            }
-             */
-
-            /*
-            System.out.println("\ndepois da mutação");
-            System.out.print("melhor: ");
-            printCromossomoComAptidao(melhor);
-
-            cromossomoBuscado = populacao[0];
-            System.out.print("\ncromossomo 0 da população: ");
-            for (int i=0; i<populacao[0].length; i++){
-                System.out.print(populacao[0][i] + " ");
-            }
-
-            cromossomoBuscado = intermediaria[0];
-            System.out.print("\ncromossomo 0 da intermediaria: ");
-            for (int i=0; i<intermediaria[0].length; i++){
-                System.out.print(intermediaria[0][i] + " ");
-            }
-             */
+            //System.out.println("População após a mutação");
+            //printMatrizDaPopulacao();
         }
     }
 
 
-    public static void  init() {
+    public static void criaPopulacaoInicial() {
         Integer[] cromossomo = new Integer[tamanhoDaTurma];
 
         // Cria um cromossomo com os números em ordem
@@ -287,6 +261,7 @@ public class GeneticAlgorithmStudents {
             }
         }
 
+        // Como estamos usando variáveis estáticas criamos esse cromossomo intermediário para evitar referências cruzadas
         Integer [] cromossomoInt = new Integer [populacao[0].length];
 
         for (int i=0; i<cromossomoInt.length; i++){
@@ -294,13 +269,9 @@ public class GeneticAlgorithmStudents {
         }
 
         // Coloca o melhor na população intermediária
-        //System.out.print("\ncolocando na intermediaria 0 o melhor: ");
         for(int i = 0; i <= tamanhoDaTurma; i++) {
             intermediaria[0][i]=cromossomoInt[i];
-            //intermediaria[0][i] = populacao[linha][i];
-            //System.out.print(intermediaria[0][i] + " ");
         }
-        //System.out.println("");
 
         return linha;
     }
