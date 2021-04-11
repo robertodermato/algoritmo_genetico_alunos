@@ -98,19 +98,19 @@ public class GeneticAlgorithmStudents {
 
             if (testaSolucao(g)) break;
 
-            /*
-            System.out.println("\nPopulação antes do crossover");
+            if (nivelDeVerbosidade>0) {
+                System.out.println("\n\n=============== Crossover =================");
+            System.out.print("População antes do crossover");
             printMatrizDaPopulacao();
-             */
+            }
 
             // Faz o crossover
             intermediaria = crossoverOBX.crossover();
 
-            /*
-            System.out.println("População após o crossover");
+            if (nivelDeVerbosidade>0) {
+            System.out.print("\nPopulação após o crossover");
             printMatrizDaIntermediaria();
-             */
-
+            }
 
             // Como estamos usando variáveis estáticas precisamos faer isso para transportar os valores da intermediária
             // para a população. simplesmente fazer populacao = intermediária não funcionaria
@@ -120,18 +120,23 @@ public class GeneticAlgorithmStudents {
                 }
             }
 
-            //System.out.println("População antes da mutação");
-            //printMatrizDaPopulacao();
+            if (nivelDeVerbosidade>0) {
+                System.out.println("\n=================== Mutação ====================");
+                System.out.print("População antes da mutação");
+                printMatrizDaPopulacao();
+            }
 
             // Faz a mutação
             mutacao();
 
-            //System.out.println("População após a mutação");
-            //printMatrizDaPopulacao();
+            if (nivelDeVerbosidade>0) {
+                System.out.print("\nPopulação após a mutação");
+                printMatrizDaPopulacao();
+            }
         }
     }
 
-
+    // Cria a população inicial
     public static void criaPopulacaoInicial() {
         Integer[] cromossomo = new Integer[tamanhoDaTurma];
 
@@ -205,7 +210,7 @@ public class GeneticAlgorithmStudents {
         }
     }
 
-    // A aptidão e calculada pela posição em que o aluno ocupa na lista de preferência. Quanto mais preferido, menor a aptidão.
+    // A aptidão é calculada pela posição em que o aluno ocupa na lista de preferência. Quanto mais preferido, menor a aptidão.
     // Logo, quanto menor a aptidão, melhor a afinidade entre os alunos.
     public static int aptidao(int x){
         int soma = 0;
@@ -241,6 +246,7 @@ public class GeneticAlgorithmStudents {
         return soma;
     }
 
+    // Método auxiliar para encontrar o índice de um elemento dentro de um vetor
     public static int indexOf(int elemento, Integer [] vetor){
         for (int i=0; i<vetor.length; i++)
         {
@@ -251,6 +257,7 @@ public class GeneticAlgorithmStudents {
         return -1;
     }
 
+    // Método para calcular o cromossomo elite e colocá-lo na população intermediária
     public static int getBest(){
         int min = populacao[0][tamanhoDaTurma];
         int linha = 0;
@@ -276,6 +283,7 @@ public class GeneticAlgorithmStudents {
         return linha;
     }
 
+    // Executa a mutação
     public static void mutacao(){
         Random rand = new Random();
         int quantidadeDeCromossomosqueVaiSofrerMutacao = (int) (Math.ceil(populacao.length * porcentagemDeCromossomosQueVaiSofrerMutacao));
@@ -321,12 +329,12 @@ public class GeneticAlgorithmStudents {
         }
     }
 
+    // Testa se alguma das condições de parada foi encontrada e exibe a solução em caso positivo
     public static boolean testaSolucao(int geracao){
 
         // Testa se o melhor resultado está se repetindo
         if (melhor==melhorGeracaoAnterior){
             contadorDeRepeticoesDeResultados = contadorDeRepeticoesDeResultados +1;
-            //System.out.println("contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
             if (contadorDeRepeticoesDeResultados==pararAposXGeracoesRepetindoResultados){
                 paradaPorRepeticao(melhor, geracao);
                 return true;
@@ -334,7 +342,6 @@ public class GeneticAlgorithmStudents {
         }
         else{
             contadorDeRepeticoesDeResultados=0;
-            //System.out.println("Zerou. contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
         }
 
         melhorGeracaoAnterior=melhor;
@@ -355,6 +362,7 @@ public class GeneticAlgorithmStudents {
         return false;
     }
 
+    // Quando achou a solução ideal
     public static void achouSolucao(int melhor, int geracao){
         System.out.println(" ");
         System.out.println(" ");
@@ -395,6 +403,7 @@ public class GeneticAlgorithmStudents {
         }
     }
 
+    // Método auxiliar para gerar uma sequência numérica de Fibonacci para o cálculo de aptidão
     public static int fibonacci (int termo){
         int [] memo = new int[termo+1];
 
@@ -408,6 +417,7 @@ public class GeneticAlgorithmStudents {
         return memo[termo];
     }
 
+    // Método auxiliar para gerar uma sequência numérica de números primos divididos por 2 para o cálculo de aptidão
     public static void primosDiv2 () {
         int [] primos = new int [tamanhoDaTurma];
         int maximo = Integer.MAX_VALUE;
@@ -433,36 +443,6 @@ public class GeneticAlgorithmStudents {
         for (int j=0; j<primos.length; j++){
             System.out.println("primo " + j + ": " + primos[j] + ", ");
         }
-    }
-
-    public static void populaTurmaPerfeita(){
-
-    preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 1; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 3;
-    preferenciasTurmaA [1][0] = 1; preferenciasTurmaA [1][1] = 2; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
-    preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
-    preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 0; preferenciasTurmaA [3][2] = 1; preferenciasTurmaA [3][3] = 2;
-
-    preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
-    preferenciasTurmaB [1][0] = 1; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 0;
-    preferenciasTurmaB [2][0] = 2; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 0; preferenciasTurmaB [2][3] = 1;
-    preferenciasTurmaB [3][0] = 3; preferenciasTurmaB [3][1] = 0; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
-
-    }
-
-    public static void populaTurmaaleatoria(){
-
-
-        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 3; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 1;
-        preferenciasTurmaA [1][0] = 2; preferenciasTurmaA [1][1] = 1; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
-        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
-        preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 1; preferenciasTurmaA [3][2] = 0; preferenciasTurmaA [3][3] = 2;
-
-        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
-        preferenciasTurmaB [1][0] = 0; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 1;
-        preferenciasTurmaB [2][0] = 0; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 2; preferenciasTurmaB [2][3] = 1;
-        preferenciasTurmaB [3][0] = 0; preferenciasTurmaB [3][1] = 3; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
-
-
     }
 }
 
