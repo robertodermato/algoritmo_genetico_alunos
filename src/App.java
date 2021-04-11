@@ -48,29 +48,19 @@ public class App {
 
         geracoesParaRodar = tamanhoDaTurma*100;
         pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
-
-        nivelDeVerbosidade = 0;
-
-        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
-                quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
-                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
-                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
-        //apagar depois
-        algoritmoEStudantes.runGenerations();
     }
 
     public void run() {
         int opcao = 1;
 
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println("=================================================");
-        System.out.println("Bem vindo ao App de confraternização de turmas");
-        System.out.println("=================================================");
-
         while(opcao!= 0){       // Repetição do menu
 
-            //System.out.println();
+            System.out.println(" ");
+            System.out.println(" ");
+            System.out.println("=================================================");
+            System.out.println("Bem vindo ao App de confraternização de turmas");
+            System.out.println("=================================================");
+            System.out.println(" ");
             System.out.println("Escolha uma das opções: ");
 
             System.out.println("1 - Ver a execução passo a passo");
@@ -106,26 +96,28 @@ public class App {
     }
 
     private void mostraExecucaoPassoPasso(){
+
+        nivelDeVerbosidade = 0;
+
+        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
+                quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
+                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
+                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
+        //apagar depois
         algoritmoEStudantes.runGenerations();
     }
 
     private void mostraApenasResultadoFinal(){
+        nivelDeVerbosidade = 0;
+
+        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
+                quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
+                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
+                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
+
+        algoritmoEStudantes.runGenerations();
 
     }
-
-    /*
-    public static void populaTurmaaleatoria(){
-        preferenciasTurmaA [0][0] = 0; preferenciasTurmaA [0][1] = 3; preferenciasTurmaA [0][2] = 2; preferenciasTurmaA [0][3] = 1;
-        preferenciasTurmaA [1][0] = 2; preferenciasTurmaA [1][1] = 1; preferenciasTurmaA [1][2] = 3; preferenciasTurmaA [1][3] = 0;
-        preferenciasTurmaA [2][0] = 2; preferenciasTurmaA [2][1] = 3; preferenciasTurmaA [2][2] = 0; preferenciasTurmaA [2][3] = 1;
-        preferenciasTurmaA [3][0] = 3; preferenciasTurmaA [3][1] = 1; preferenciasTurmaA [3][2] = 0; preferenciasTurmaA [3][3] = 2;
-
-        preferenciasTurmaB [0][0] = 0; preferenciasTurmaB [0][1] = 1; preferenciasTurmaB [0][2] = 2; preferenciasTurmaB [0][3] = 3;
-        preferenciasTurmaB [1][0] = 0; preferenciasTurmaB [1][1] = 2; preferenciasTurmaB [1][2] = 3; preferenciasTurmaB [1][3] = 1;
-        preferenciasTurmaB [2][0] = 0; preferenciasTurmaB [2][1] = 3; preferenciasTurmaB [2][2] = 2; preferenciasTurmaB [2][3] = 1;
-        preferenciasTurmaB [3][0] = 0; preferenciasTurmaB [3][1] = 3; preferenciasTurmaB [3][2] = 1; preferenciasTurmaB [3][3] = 2;
-    }
-     */
 
     /**
      * Reads the SOURCE file and populates de students preferences
@@ -156,7 +148,7 @@ public class App {
             preferenciasTurmaB = new Integer[tamanhoDaTurma][tamanhoDaTurma];
 
             // Popula array de preferências da turma B
-            System.out.println("Preferencia A");
+            //System.out.println("Preferencia A");
             for (int i=0; i<tamanhoDaTurma; i++){
                 line = reader.readLine();
                 //System.out.println(line);
@@ -174,10 +166,10 @@ public class App {
                     previousB = nextB;
                 }
             }
-            printMatriz(preferenciasTurmaA);
+            //printMatriz(preferenciasTurmaA);
 
             // Popula array de preferências da turma B
-            System.out.println("Preferencia B");
+            //System.out.println("Preferencia B");
             for (int i=0; i<tamanhoDaTurma; i++){
                 line = reader.readLine();
                 //System.out.println(line);
@@ -195,7 +187,7 @@ public class App {
                     previousA = nextA;
                 }
             }
-            printMatriz(preferenciasTurmaB);
+            //printMatriz(preferenciasTurmaB);
 
 
         } catch (NoSuchFileException x) {
@@ -215,5 +207,4 @@ public class App {
             System.out.println(" ");
         }
     }
-
 }

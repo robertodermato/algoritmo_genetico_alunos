@@ -112,7 +112,7 @@ public class GeneticAlgorithmStudents {
             // Se chegou na última geração e não encontrou nenhuma das condições de parada,
             // simplesmente mostra e melhor solução até o momento
             if (g==(geracoesParaRodar-1)){
-                printSolucaoDecodificada(0);
+                naoEncontrouCondicoesDeParada();
                 break;
             }
 
@@ -147,7 +147,7 @@ public class GeneticAlgorithmStudents {
              */
 
             // Faz a mutação
-            mutacaoComBug();
+            mutacao();
 
             /*
             System.out.println("População antes da mutação");
@@ -333,80 +333,6 @@ public class GeneticAlgorithmStudents {
     public static void mutacao(){
         Random rand = new Random();
         int quantidadeDeCromossomosqueVaiSofrerMutacao = (int) (Math.ceil(populacao.length * porcentagemDeCromossomosQueVaiSofrerMutacao));
-        //int quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao = (int) (Math.ceil(populacao[0].length * porcentagemDeGenesQueVaoSofrerMutacao));
-        //System.out.println("Quantidade de cromossomos que vai sofrer mutação é: " + quantidadeDeCromossomosqueVaiSofrerMutacao);
-
-        //nova parte
-        int cromossomoEscolhidoParaSofrerMutacao = ((rand.nextInt(quantidadeDeCromossomos-1)))+1;
-        int posicao1 = rand.nextInt(tamanhoDaTurma);
-        int posicao2 = rand.nextInt(tamanhoDaTurma);
-        while (posicao1 == posicao2) {
-            posicao2 = rand.nextInt(tamanhoDaTurma);
-        }
-        int conteudoPosicao1 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1];
-        int conteudoPosicao2 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2];
-        int conteudoIntermediario = conteudoPosicao1;
-        conteudoPosicao1 = conteudoPosicao2;
-        conteudoPosicao2 = conteudoIntermediario;
-        System.out.println("\nCromossomo escolhido: " + cromossomoEscolhidoParaSofrerMutacao);
-        System.out.print("\nCromossomo 0 da populaçao antes do conteúdo 1: ");
-        for (int k=0; k<populacao[0].length; k++){
-            System.out.print(populacao[0][k] + " ");
-        }
-        System.out.print("\nCromossomo " + cromossomoEscolhidoParaSofrerMutacao + " da populaçao antes do conteúdo 1: ");
-        for (int k=0; k<populacao[cromossomoEscolhidoParaSofrerMutacao].length; k++){
-            System.out.print(populacao[cromossomoEscolhidoParaSofrerMutacao][k] + " ");
-        }
-        populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1] = conteudoPosicao1;
-        System.out.print("\nCromossomo 0 da populaçao antes do conteúdo 2: ");
-        for (int k=0; k<populacao[0].length; k++){
-            System.out.print(populacao[0][k] + " ");
-        }
-        System.out.print("\nCromossomo " + cromossomoEscolhidoParaSofrerMutacao + " da populaçao antes do conteúdo 2: ");
-        for (int k=0; k<populacao[cromossomoEscolhidoParaSofrerMutacao].length; k++){
-            System.out.print(populacao[cromossomoEscolhidoParaSofrerMutacao][k] + " ");
-        }
-        populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2] = conteudoPosicao2;
-        System.out.print("\nCromossomo 0 da populaçao após conteúdo 2: ");
-        for (int k=0; k<populacao[0].length; k++){
-            System.out.print(populacao[0][k] + " ");
-        }
-        System.out.print("\nCromossomo " + cromossomoEscolhidoParaSofrerMutacao + " da populaçao após conteúdo 2: ");
-        for (int k=0; k<populacao[cromossomoEscolhidoParaSofrerMutacao].length; k++){
-            System.out.print(populacao[cromossomoEscolhidoParaSofrerMutacao][k] + " ");
-        }
-
-        /*
-        for(int i = 0; i<quantidadeDeCromossomosqueVaiSofrerMutacao; i++){
-            int cromossomoEscolhidoParaSofrerMutacao = ((rand.nextInt(quantidadeDeCromossomos-1)))+1;
-            //System.out.println("\nDepois do while, o cromosso escolhido para mutação foi o " + cromossomoEscolhidoParaSofrerMutacao);
-            // Ainda dá pra evitar que o mesmo cromossomo seja escolhido duas vezes. Update futuro.
-            // Escolhe as posições que sofrerão troca
-            int posicao1 = rand.nextInt(tamanhoDaTurma);
-            int posicao2 = rand.nextInt(tamanhoDaTurma);
-            // Evita escolher duas vezes a mesma posição
-            while (posicao1 == posicao2) {
-                posicao2 = rand.nextInt(tamanhoDaTurma);
-            }
-            // Faz a mutação
-
-
-            int conteudoPosicao1 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1];
-            int conteudoPosicao2 = populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2];
-            int conteudoIntermediario = conteudoPosicao1;
-            conteudoPosicao1 = conteudoPosicao2;
-            conteudoPosicao2 = conteudoIntermediario;
-            populacao[cromossomoEscolhidoParaSofrerMutacao][posicao1] = conteudoPosicao1;
-            populacao[cromossomoEscolhidoParaSofrerMutacao][posicao2] = conteudoPosicao2;
-
-        }
-
-         */
-    }
-
-    public static void mutacaoComBug(){
-        Random rand = new Random();
-        int quantidadeDeCromossomosqueVaiSofrerMutacao = (int) (Math.ceil(populacao.length * porcentagemDeCromossomosQueVaiSofrerMutacao));
         int quantidadeDeGenesNesseCromossomoQueVaiSofrerMutacao = (int) (Math.ceil(populacao[0].length * porcentagemDeGenesQueVaoSofrerMutacao));
 
         for(int i = 0; i<quantidadeDeCromossomosqueVaiSofrerMutacao; i++){
@@ -453,7 +379,9 @@ public class GeneticAlgorithmStudents {
         System.out.println(" ");
         System.out.println(" ");
         System.out.println("=================================================");
-        System.out.println("Achou a solução ótima na geração " + geracao + ". Ela corresponde ao cromossomo: "+ melhor);
+        System.out.println("==================== Solução ====================");
+        System.out.println("=================================================");
+        System.out.println("Achou a solução ótima na geração " + geracao);
         printSolucaoDecodificada(melhor);
     }
 
@@ -461,11 +389,27 @@ public class GeneticAlgorithmStudents {
         System.out.println(" ");
         System.out.println(" ");
         System.out.println("=================================================");
-        System.out.println("Parou a execução na geração " + geracao + ", pois ficou repetindo a mesma solução. Essa solução corresponde ao cromossomo: "+ melhor);
+        System.out.println("==================== Solução ====================");
+        System.out.println("=================================================");
+        System.out.println("Parou a execução na geração " + geracao + ", pois ficou repetindo a mesma solução.");
         printSolucaoDecodificada(melhor);
     }
 
+    public static void naoEncontrouCondicoesDeParada(){
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("=================================================");
+        System.out.println("==================== Solução ====================");
+        System.out.println("=================================================");
+        System.out.println("O algoritmo chegou na última geração e a melhor solução encontrada foi a seguinte: ");
+        printSolucaoDecodificada(0);
+    }
+
     public static void printSolucaoDecodificada (int melhor){
+        System.out.print("Solução codificada ");
+        printCromossomoComAptidao(melhor);
+        System.out.println(" ");
+        System.out.println("Solução decodificada: ");
         for (int i=0; i<populacao[melhor].length-1; i++){
             System.out.println("Aluno A" + (i+1) + " com Aluno B" + (populacao[melhor][i]+1));
         }
