@@ -22,8 +22,12 @@ public class GeneticAlgorithmStudents {
 
     private static int geracoesParaRodar;
     private static int pararAposXGeracoesRepetindoResultados;
+    private static int contadorDeRepeticoesDeResultados;
 
     private static int nivelDeVerbosidade;
+
+    private static int melhor;
+    private static int melhorGeracaoAnterior;
 
     private static CrossoverOBX crossoverOBX;
 
@@ -49,6 +53,9 @@ public class GeneticAlgorithmStudents {
         geracoesParaRodar = geracoesParaRodarRecebida;
         nivelDeVerbosidade = nivelDeVerbosidaderecebido;
         pararAposXGeracoesRepetindoResultados = pararAposXGeracoesRepetindoResultadosRecebido;
+        contadorDeRepeticoesDeResultados=0;
+
+        melhorGeracaoAnterior=-1;
 
         preferenciasTurmaA = preferenciasTurmaArecebido;
         preferenciasTurmaB = preferenciasTurmaBrecebido;
@@ -68,9 +75,6 @@ public class GeneticAlgorithmStudents {
 
     public static void runGenerations() {
         Random rand = new Random();
-        int melhor;
-        int melhorGeracaoAnterior = -1;
-        int contadorDeRepeticoesDeResultados = 0;
 
         // Roda as gerações
         for (int g=0; g<geracoesParaRodar; g++){
@@ -87,6 +91,8 @@ public class GeneticAlgorithmStudents {
             printCromossomoComAptidao(melhor);
             //printMatriz();
 
+            if (testaSolucao(g)) break;
+/*
             // Testa se o melhor resultado está se repetindo
             if (melhor==melhorGeracaoAnterior){
                 contadorDeRepeticoesDeResultados = contadorDeRepeticoesDeResultados +1;
@@ -115,6 +121,8 @@ public class GeneticAlgorithmStudents {
                 naoEncontrouCondicoesDeParada();
                 break;
             }
+
+ */
 
             /*
             System.out.println("\nPopulação antes do crossover");
@@ -373,6 +381,40 @@ public class GeneticAlgorithmStudents {
             //printCromossomoComAptidao(cromossomoEscolhidoParaSofrerMutacao);
             }
         }
+    }
+
+    public static boolean testaSolucao(int geracao){
+
+        // Testa se o melhor resultado está se repetindo
+        if (melhor==melhorGeracaoAnterior){
+            contadorDeRepeticoesDeResultados = contadorDeRepeticoesDeResultados +1;
+            //System.out.println("contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
+            if (contadorDeRepeticoesDeResultados==pararAposXGeracoesRepetindoResultados){
+                paradaPorRepeticao(melhor, geracao);
+                return true;
+            }
+        }
+        else{
+            contadorDeRepeticoesDeResultados=0;
+            //System.out.println("Zerou. contador de repetiçoes = " + contadorDeRepeticoesDeResultados);
+        }
+
+        melhorGeracaoAnterior=melhor;
+
+        // Testa se achou solução ideal
+        if(populacao[melhor][tamanhoDaTurma]==0) {
+            achouSolucao(melhor, geracao);
+            return true;
+        }
+
+        // Se chegou na última geração e não encontrou nenhuma das condições de parada,
+        // simplesmente mostra e melhor solução até o momento
+        if (geracao==(geracoesParaRodar-1)){
+            naoEncontrouCondicoesDeParada();
+            return true;
+        }
+
+        return false;
     }
 
     public static void achouSolucao(int melhor, int geracao){
