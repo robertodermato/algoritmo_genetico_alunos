@@ -109,6 +109,13 @@ public class GeneticAlgorithmStudents {
                 break;
             }
 
+            // Se chegou na última geração e não encontrou nenhuma das condições de parada,
+            // simplesmente mostra e melhor solução até o momento
+            if (g==(geracoesParaRodar-1)){
+                printSolucaoDecodificada(0);
+                break;
+            }
+
             /*
             System.out.println("\nPopulação antes do crossover");
             printMatrizDaPopulacao();

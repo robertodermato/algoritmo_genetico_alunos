@@ -9,9 +9,9 @@ public class Main {
         //arquivo = "duplos10ideal.txt";
         //arquivo = "duplos20.txt";
         //arquivo = "duplos20ideal.txt";
-        //arquivo = "duplos50.txt";
+        arquivo = "duplos50.txt";
         //arquivo = "duplos50ideal.txt";
-        arquivo = "duplos100ideal.txt";
+        //arquivo = "duplos100ideal.txt";
 
         App app = new App(arquivo);
         app.run();
