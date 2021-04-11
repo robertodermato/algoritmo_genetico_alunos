@@ -35,19 +35,19 @@ public class App {
     public App(String arquivo) {
         readSource(arquivo);
 
-        // para 100: 100 cromossomos, 0.05 de mutação, 0.25 de crossover, 15mil gerações
-        quantidadeDeCromossomos = 100;
+        // para 100: 100 cromossomos, 0.001 de mutação genes e 0,1 mutação cromossomos, 0.2 de crossover, 15mil gerações
+        quantidadeDeCromossomos = tamanhoDaTurma;
 
         //Essa taxa não está sendo usada
         taxaDeCromossomosQueSofreraoCrossover = 0.8;
         // Essa é a que vale e convém ficar entre 0.1 e 0.4 já que são trocas, não adiante ser 0.5, pois isso faria troca de 100% dos genes.
-        taxaDeGenesQueSofreraoCrossover = 0.25;
+        taxaDeGenesQueSofreraoCrossover = 0.15;
 
-        porcentagemDeCromossomosQueVaiSofrerMutacao = 0.2;
+        porcentagemDeCromossomosQueVaiSofrerMutacao = 0.05;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.001;
 
-        geracoesParaRodar = 15000;
-        pararAposXGeracoesRepetindoResultados = 5000;
+        geracoesParaRodar = tamanhoDaTurma*100;
+        pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
 
         nivelDeVerbosidade = 0;
 
