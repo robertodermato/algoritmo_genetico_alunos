@@ -34,7 +34,7 @@ public class App {
     private static int opcaoDeSequencia;
 
     // Construtor. Defina as variáveis aqui
-    public App(String arquivo) {
+    public App(String arquivo, int opcaoDeSequenciaRecebido) {
         readSource(arquivo);
 
         // para 100: 100 cromossomos, 0.001 de mutação genes e 0,1 mutação cromossomos, 0.2 de crossover, 15mil gerações
@@ -51,7 +51,7 @@ public class App {
         geracoesParaRodar = tamanhoDaTurma*100;
         pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
 
-        opcaoDeSequencia = 1;
+        opcaoDeSequencia = opcaoDeSequenciaRecebido;
 
     }
 

@@ -40,7 +40,7 @@ public class GeneticAlgorithmStudents {
                                     int quantidadeDeCromossomosRecebida, double taxaDeIndviduosDaPopulacaoQueSofreraoCrossoverRecebido,
                                     double taxaDeGenesQueSofreraoCrossoverRecebida, double porcentagemDeCromossomosQueVaiSofrerMutacaoRecebida,
                                     double porcentagemDeGenesQueVaoSofrerMutacaoRecebida, int geracoesParaRodarRecebida,
-                                    int pararAposXGeracoesRepetindoResultadosRecebido, int nivelDeVerbosidaderecebido, int opcaoDeSequencia){
+                                    int pararAposXGeracoesRepetindoResultadosRecebido, int nivelDeVerbosidaderecebido, int opcaoDeSequenciaRecebido){
 
         // Inicializando variáveis da população
         quantidadeDeCromossomos = quantidadeDeCromossomosRecebida;
@@ -71,13 +71,8 @@ public class GeneticAlgorithmStudents {
         populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
 
-        // Criando a população inicial
-        criaPopulacaoInicial();
-
-        // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
-        crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
-
         // Sequências usadas
+        int opcaoDeSequencia = opcaoDeSequenciaRecebido;
         if (opcaoDeSequencia==0) sequencia = inteiros();
         if (opcaoDeSequencia==1) sequencia = primos();
         if (opcaoDeSequencia==2) sequencia = primosDiv2();
@@ -87,6 +82,16 @@ public class GeneticAlgorithmStudents {
         if (opcaoDeSequencia==6) sequencia = escalaSequenciaInvertida(primosDiv2());
         if (opcaoDeSequencia==7) sequencia = escalaSequenciaInvertida(fibonacci());
         if (opcaoDeSequencia==8) sequencia = escalaSequenciaInvertida(potenciasDe2());
+        System.out.println("seq");
+        printSequencia(sequencia);
+
+        // Criando a população inicial
+        criaPopulacaoInicial();
+
+        // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
+        crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
+
+
     }
 
     public static void runGenerations() {
@@ -244,13 +249,13 @@ public class GeneticAlgorithmStudents {
             //Vê as posições de preferências nas turma A
             posicaoDePreferenciaDoAluno = indexOf(populacao[x][i], preferenciasTurmaA[i]);
             //System.out.println("posição da preferencia do aluno " + populacao[x][i] + " da turma B para o aluno A" + i + " é: " + posicaoDePreferenciaDoAluno);
-            valorDaPreferencia = posicaoDePreferenciaDoAluno;
+            valorDaPreferencia = sequencia[posicaoDePreferenciaDoAluno];
             soma = soma + valorDaPreferencia;
 
             //Vê as posições de preferências nas turma B
             posicaoDePreferenciaDoAluno = indexOf(i, preferenciasTurmaB[populacao[x][i]]);
             //System.out.println("posição da preferencia do aluno " + i + " da turma A para o aluno B" + populacao[x][i] + " é: " + posicaoDePreferenciaDoAluno);
-            valorDaPreferencia = posicaoDePreferenciaDoAluno;
+            valorDaPreferencia = sequencia[posicaoDePreferenciaDoAluno];
             soma = soma + valorDaPreferencia;
 
         }
@@ -491,7 +496,7 @@ public class GeneticAlgorithmStudents {
     private static int [] inteiros (){
         int [] inteiros = new int [tamanhoDaTurma];
         for (int i=0; i<tamanhoDaTurma; i++){
-            inteiros[i] = 1;
+            inteiros[i] = i;
         }
         return inteiros;
     }

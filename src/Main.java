@@ -14,7 +14,10 @@ public class Main {
         //arquivo = "duplos100ideal.txt";
         //arquivo = "duplos250ideal.txt";
 
-        App app = new App(arquivo);
+        int opcaoDeSequencia;
+        opcaoDeSequencia=0;
+
+        App app = new App(arquivo,opcaoDeSequencia);
         app.run();
     }
 }
