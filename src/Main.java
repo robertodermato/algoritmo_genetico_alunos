@@ -1,21 +1,31 @@
 public class Main {
     public static void main(String[] args) {
 
+        // Escolha o nome do arquivo que deverá ser lido
+
         String arquivo;
-        //arquivo = "duplos4.txt";
+        //arquivo = "duplos4.txt"; // arquivo da professora
         //arquivo = "duplos4idela.txt";
         //arquivo = "duplos9ideal.txt";
-        //arquivo = "duplos10.txt";
+        //arquivo = "duplos10.txt"; // arquivo da professora
         //arquivo = "duplos10ideal.txt";
-        //arquivo = "duplos20.txt";
-        arquivo = "duplos20ideal.txt";
-        //arquivo = "duplos50.txt";
+        //arquivo = "duplos20.txt"; // arquivo da professora
+        //arquivo = "duplos20ideal.txt";
+        arquivo = "duplos50.txt"; // arquivo da professora
         //arquivo = "duplos50ideal.txt";
         //arquivo = "duplos100ideal.txt";
         //arquivo = "duplos250ideal.txt";
 
         int opcaoDeSequencia;
-        opcaoDeSequencia=0;
+        opcaoDeSequencia=0; // inteiros
+        //opcaoDeSequencia=1; // primos
+        //opcaoDeSequencia=2; // primos divididos por 2
+        //opcaoDeSequencia=3; // fibonacci
+        //opcaoDeSequencia=4; // potências de 2
+        //opcaoDeSequencia=5; // primos invertida
+        //opcaoDeSequencia=6; // primos divididos por 2 invertida
+        //opcaoDeSequencia=7; // fibonacci invertida
+        //opcaoDeSequencia=8; // potências de 2 invertida
 
         App app = new App(arquivo,opcaoDeSequencia);
         app.run();

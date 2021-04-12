@@ -71,7 +71,7 @@ public class GeneticAlgorithmStudents {
         populacao = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
         intermediaria = new Integer[quantidadeDeCromossomos][tamanhoDaTurma+1];
 
-        // Sequências usadas
+        // Define a sequência que será usada
         int opcaoDeSequencia = opcaoDeSequenciaRecebido;
         if (opcaoDeSequencia==0) sequencia = inteiros();
         if (opcaoDeSequencia==1) sequencia = primos();
@@ -82,8 +82,10 @@ public class GeneticAlgorithmStudents {
         if (opcaoDeSequencia==6) sequencia = escalaSequenciaInvertida(primosDiv2());
         if (opcaoDeSequencia==7) sequencia = escalaSequenciaInvertida(fibonacci());
         if (opcaoDeSequencia==8) sequencia = escalaSequenciaInvertida(potenciasDe2());
-        System.out.println("seq");
-        printSequencia(sequencia);
+        if (nivelDeVerbosidade==0) {
+            System.out.println("Sequência usada");
+            printSequencia(sequencia);
+        }
 
         // Criando a população inicial
         criaPopulacaoInicial();
@@ -181,7 +183,7 @@ public class GeneticAlgorithmStudents {
             }
             System.out.print(populacao[cromossomo][i] + ", ");
         }
-        System.out.print(" -- Aptidão: " + populacao[cromossomo][populacao[cromossomo].length-1]);
+        System.out.print("\nSua aptidão é: " + populacao[cromossomo][populacao[cromossomo].length-1]);
     }
 
 
