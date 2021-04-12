@@ -83,10 +83,10 @@ public class GeneticAlgorithmStudents {
         if (opcaoDeSequencia==2) sequencia = primosDiv2();
         if (opcaoDeSequencia==3) sequencia = fibonacci();
         if (opcaoDeSequencia==4) sequencia = potenciasDe2();
-        if (opcaoDeSequencia==5) sequencia = inverteSequencia (primos());
-        if (opcaoDeSequencia==6) sequencia = inverteSequencia(primosDiv2());
-        if (opcaoDeSequencia==7) sequencia = inverteSequencia(fibonacci());
-        if (opcaoDeSequencia==8) sequencia = inverteSequencia(potenciasDe2());
+        if (opcaoDeSequencia==5) sequencia = escalaSequenciaInvertida(primos());
+        if (opcaoDeSequencia==6) sequencia = escalaSequenciaInvertida(primosDiv2());
+        if (opcaoDeSequencia==7) sequencia = escalaSequenciaInvertida(fibonacci());
+        if (opcaoDeSequencia==8) sequencia = escalaSequenciaInvertida(potenciasDe2());
     }
 
     public static void runGenerations() {
@@ -511,6 +511,17 @@ public class GeneticAlgorithmStudents {
             sequenciaASerInvertida[sequenciaASerInvertida.length -i -1] = temp;
         }
         return sequenciaASerInvertida;
+    }
+
+    private static int [] escalaSequenciaInvertida (int [] sequencia){
+        int [] sequenciaInvertida = inverteSequencia(sequencia);
+        int [] sequenciaComEscalaDaSequenciaInvertida = new int [tamanhoDaTurma];
+        sequenciaComEscalaDaSequenciaInvertida[0] = 0;
+        for (int i=1; i<sequenciaComEscalaDaSequenciaInvertida.length; i++){
+            int diferencaEntre2NumerosDaSeqInvertida = sequenciaInvertida[i-1] - sequenciaInvertida[i];
+            sequenciaComEscalaDaSequenciaInvertida[i]=sequenciaComEscalaDaSequenciaInvertida[i-1] + diferencaEntre2NumerosDaSeqInvertida;
+        }
+        return sequenciaComEscalaDaSequenciaInvertida;
     }
 }
 
