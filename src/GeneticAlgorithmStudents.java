@@ -78,7 +78,7 @@ public class GeneticAlgorithmStudents {
         crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
 
         // Sequências usadas
-        if (opcaoDeSequencia==0) sequencia = apenasUns();
+        if (opcaoDeSequencia==0) sequencia = inteiros();
         if (opcaoDeSequencia==1) sequencia = primos();
         if (opcaoDeSequencia==2) sequencia = primosDiv2();
         if (opcaoDeSequencia==3) sequencia = fibonacci();
@@ -488,13 +488,12 @@ public class GeneticAlgorithmStudents {
     }
 
     // Método auxiliar para gerar uma sequência numérica de números 1 para o cálculo de aptidão
-    private static int [] apenasUns (){
-        int [] apenasUns = new int [tamanhoDaTurma];
-        apenasUns[0]=0;
-        for (int i=1; i<tamanhoDaTurma; i++){
-            apenasUns[i] = 1;
+    private static int [] inteiros (){
+        int [] inteiros = new int [tamanhoDaTurma];
+        for (int i=0; i<tamanhoDaTurma; i++){
+            inteiros[i] = 1;
         }
-        return apenasUns;
+        return inteiros;
     }
 
     private static void printSequencia (int [] sequencia){
