@@ -16,6 +16,9 @@ public class Main {
         //arquivo = "duplos100ideal.txt";
         //arquivo = "duplos250ideal.txt";
 
+        // Essas sequências estão implementadas a titulo de curiosidade, pois parecem ser mais ineficazes
+        // que a sequência de números inteiros, que é a opção 0, portanto recomenda-se não mudar esse parâmetro
+
         int opcaoDeSequencia;
         opcaoDeSequencia=0; // inteiros
         //opcaoDeSequencia=1; // primos
