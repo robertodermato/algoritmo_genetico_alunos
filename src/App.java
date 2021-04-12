@@ -63,8 +63,9 @@ public class App {
             System.out.println(" ");
             System.out.println("Escolha uma das opções: ");
 
-            System.out.println("1 - Ver a execução passo a passo");
-            System.out.println("2 - Ver apenas o resultado final");
+            System.out.println("1 - Ver apenas o resultado final");
+            System.out.println("2 - Ver a execução passo a passo");
+            System.out.println("3 - Ver a execução ultra detalhada");
             System.out.println("0 - sair\n");
 
             try{       // Impede que usuário digite letra
@@ -79,11 +80,18 @@ public class App {
 
             switch (opcao){
                 case 1 :
-                    mostraExecucaoPassoPasso();
+                    nivelDeVerbosidade = 0;
+                    geraErodaOAlgoritmo();
                     break;
 
                 case 2:
-                    mostraApenasResultadoFinal();
+                    nivelDeVerbosidade = 1;
+                    geraErodaOAlgoritmo();
+                    break;
+
+                case 3:
+                    nivelDeVerbosidade = 2;
+                    geraErodaOAlgoritmo();
                     break;
 
                 case 0:     // Sai do menu, encerra programa
@@ -95,20 +103,7 @@ public class App {
         }
     }
 
-    private void mostraExecucaoPassoPasso(){
-        nivelDeVerbosidade = 1;
-
-        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
-                quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
-                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
-                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
-
-        algoritmoEStudantes.runGenerations();
-    }
-
-    private void mostraApenasResultadoFinal(){
-        nivelDeVerbosidade = 0;
-
+    private void geraErodaOAlgoritmo(){
         algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
                 quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
                 porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,

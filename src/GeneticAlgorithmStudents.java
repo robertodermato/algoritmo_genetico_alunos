@@ -72,7 +72,7 @@ public class GeneticAlgorithmStudents {
         criaPopulacaoInicial();
 
         // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
-        crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao);
+        crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
 
         //primos();
     }
