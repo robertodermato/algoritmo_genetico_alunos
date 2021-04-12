@@ -69,8 +69,9 @@ public class App {
             System.out.println("Escolha uma das opções: ");
 
             System.out.println("1 - Ver apenas o resultado final");
-            System.out.println("2 - Ver a execução passo a passo");
-            System.out.println("3 - Ver a execução ultra detalhada");
+            System.out.println("2 - Ver a evolução das gerações");
+            System.out.println("3 - Ver a execução passo a passo");
+            System.out.println("4 - Ver a execução ultra detalhada");
             System.out.println("0 - sair\n");
 
             try{       // Impede que usuário digite letra
@@ -96,6 +97,11 @@ public class App {
 
                 case 3:
                     nivelDeVerbosidade = 2;
+                    geraErodaOAlgoritmo();
+                    break;
+
+                case 4:
+                    nivelDeVerbosidade = 3;
                     geraErodaOAlgoritmo();
                     break;
 

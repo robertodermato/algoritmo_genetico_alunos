@@ -37,7 +37,7 @@ public class CrossoverOBX {
                 cromossomoPai2 = torneio();
             }
 
-            if (nivelDeVerbosidade>1) {
+            if (nivelDeVerbosidade>2) {
             System.out.println("============Pegando indivíduos para crossover=======");
             System.out.println("Pai1 do crossover é: " + cromossomoPai1);
             System.out.println("Pai2 do crossover é: " + cromossomoPai2);
@@ -54,7 +54,7 @@ public class CrossoverOBX {
         // Calcula em quantos genes ocorrerá o crossover
         int crossoverRateSum = (int) Math.ceil((quantidadeDeGenes -1) * taxaDeGenesQueSofreraoCrossover);
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
         System.out.println("");
         System.out.println("=============================== Crossover ================================");
         System.out.println("Como a taxa de crossover é " + taxaDeGenesQueSofreraoCrossover + " e o tamanho de um cromosso é "
@@ -97,7 +97,7 @@ public class CrossoverOBX {
             if (posicoesDoCrossover[i]==null) posicoesDoCrossover[i]=0;
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.print("A máscara de crossover que será usada é (sendo 1 = gene que sofrerá crossover e 0 = não sofrerá): ");
             for (int i = 0; i < quantidadeDeGenes - 1; i++) {
                 if (i == quantidadeDeGenes - 2) {
@@ -122,7 +122,7 @@ public class CrossoverOBX {
 
 
         // Pai 1
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.print("Pai 1: ");
             for (int i = 0; i < parent1.length; i++) {
                 System.out.print(parent1[i] + ", ");
@@ -141,7 +141,7 @@ public class CrossoverOBX {
              }
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("Os elementos que sofrerão crossover em Pai1 são: ");
             for (int i = 0; i < elementosDoPai1.length; i++) {
@@ -168,7 +168,7 @@ public class CrossoverOBX {
             }
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("Os elementos que sofrerão crossover em Pai2 são: ");
             for (int i = 0; i < elementosDoPai2.length; i++) {
@@ -189,7 +189,7 @@ public class CrossoverOBX {
             }
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("Os genes do pai 1, ocupam as seguintes posições no pai 2: ");
             for (int i = 0; i < posicoesGenesPai1noPai2.length; i++) {
@@ -200,7 +200,7 @@ public class CrossoverOBX {
         // coloca em ordem as posições que irão sofrer crossover
         Collections.sort(Arrays.asList(posicoesGenesPai1noPai2));
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("De forma organizada, os genes do pai 1, ocupam as seguintes posições no pai 2: ");
             for (int i = 0; i < posicoesGenesPai1noPai2.length; i++) {
@@ -220,7 +220,7 @@ public class CrossoverOBX {
             }
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("Os genes do pai 2, ocupam as seguines posições no pai 1: ");
             for (int i = 0; i < posicoesGenesPai2noPai1.length; i++) {
@@ -231,7 +231,7 @@ public class CrossoverOBX {
         // coloca em ordem as posições que irão sofrer crossover
         Collections.sort(Arrays.asList(posicoesGenesPai2noPai1));
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("De forma organizada, os genes do pai 2, ocupam as seguintes posições no pai 1: ");
             for (int i = 0; i < posicoesGenesPai2noPai1.length; i++) {
@@ -257,7 +257,7 @@ public class CrossoverOBX {
             }
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.print("Filho 1: ");
             for (int i = 0; i < son1.length; i++) {
@@ -274,7 +274,7 @@ public class CrossoverOBX {
         int indiceParaFilho2 = indiceParaFilho1+1;
 
         // Coloca os filhos na nova população, se o número sorteado for maior que a taxa de crossver mantém os pais e não faz crossver
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("\nColocando os filhos na nova população");
             System.out.println("Colocado os filhos " + indiceParaFilho1 + " e " + indiceParaFilho2);
         }
@@ -303,7 +303,7 @@ public class CrossoverOBX {
             individuo2 = rand.nextInt(populacaoParaCrossover.length);
         }
 
-        if (nivelDeVerbosidade>1) {
+        if (nivelDeVerbosidade>2) {
             System.out.println("");
             System.out.println("========= Torneio ========");
             System.out.println("Aptidão do primeiro sorteado = " + populacaoParaCrossover[individuo1][populacaoParaCrossover[0].length - 1]

@@ -29,6 +29,7 @@ public class GeneticAlgorithmStudents {
 
     private static int melhor;
     private static int melhorGeracaoAnterior;
+    private static Integer [] melhorNoGeral;
 
     private static CrossoverOBX crossoverOBX;
 
@@ -59,6 +60,7 @@ public class GeneticAlgorithmStudents {
         pararAposXGeracoesRepetindoResultados = pararAposXGeracoesRepetindoResultadosRecebido;
         contadorDeRepeticoesDeResultados=0;
         melhorGeracaoAnterior=-1;
+        melhorNoGeral=null;
 
         // Inicializando variável que vai definir o que é ou não mostrado na tela
         nivelDeVerbosidade = nivelDeVerbosidaderecebido;
@@ -82,8 +84,8 @@ public class GeneticAlgorithmStudents {
         if (opcaoDeSequencia==6) sequencia = escalaSequenciaInvertida(primosDiv2());
         if (opcaoDeSequencia==7) sequencia = escalaSequenciaInvertida(fibonacci());
         if (opcaoDeSequencia==8) sequencia = escalaSequenciaInvertida(potenciasDe2());
-        if (nivelDeVerbosidade==0) {
-            System.out.println("Sequência usada");
+        if (nivelDeVerbosidade>2) {
+            System.out.println("Sequência usada como máscara para cálculo da aptidão");
             printSequencia(sequencia);
         }
 
@@ -96,28 +98,32 @@ public class GeneticAlgorithmStudents {
 
     }
 
-    public static void runGenerations() {
+    public static Integer [] runGenerations() {
         Random rand = new Random();
 
         // Roda as gerações
         for (int g=0; g<geracoesParaRodar; g++){
-            System.out.println("\n\n===================== Geração: " + g + " =====================");
+            if (nivelDeVerbosidade>0) {
+                System.out.println("\n\n===================== Geração: " + g + " =====================");
+            }
             calculaAptidao();
 
             // Mostra a população
-            if (nivelDeVerbosidade>0) {
+            if (nivelDeVerbosidade>1) {
                 System.out.print("População após aptidão calculada");
                 printMatrizDaPopulacao();
             }
 
             // Calcula qual o melhor cromossomo
             melhor = getBest();
-            System.out.print("Pelo método de Elitismo, o melhor cromossomo encontrado é o " + melhor + " - ");
-            printCromossomoComAptidao(melhor);
+            if (nivelDeVerbosidade>0) {
+                System.out.print("Pelo método de Elitismo, o melhor cromossomo encontrado é o " + melhor + " - ");
+                printCromossomoComAptidao(melhor);
+            }
 
             if (testaSolucao(g)) break;
 
-            if (nivelDeVerbosidade>0) {
+            if (nivelDeVerbosidade>1) {
                 System.out.println("\n\n=============== Crossover =================");
             System.out.print("População antes do crossover");
             printMatrizDaPopulacao();
@@ -126,7 +132,7 @@ public class GeneticAlgorithmStudents {
             // Faz o crossover
             intermediaria = crossoverOBX.crossover();
 
-            if (nivelDeVerbosidade>0) {
+            if (nivelDeVerbosidade>1) {
             System.out.print("\nPopulação após o crossover");
             printMatrizDaIntermediaria();
             }
@@ -139,7 +145,7 @@ public class GeneticAlgorithmStudents {
                 }
             }
 
-            if (nivelDeVerbosidade>0) {
+            if (nivelDeVerbosidade>1) {
                 System.out.println("\n=================== Mutação ====================");
                 System.out.print("População antes da mutação");
                 printMatrizDaPopulacao();
@@ -148,11 +154,12 @@ public class GeneticAlgorithmStudents {
             // Faz a mutação
             mutacao();
 
-            if (nivelDeVerbosidade>0) {
+            if (nivelDeVerbosidade>1) {
                 System.out.print("\nPopulação após a mutação");
                 printMatrizDaPopulacao();
             }
         }
+        return melhorNoGeral;
     }
 
     // Cria a população inicial
@@ -420,6 +427,7 @@ public class GeneticAlgorithmStudents {
         for (int i=0; i<populacao[melhor].length-1; i++){
             System.out.println("Aluno A" + (i+1) + " com Aluno B" + (populacao[melhor][i]+1));
         }
+        melhorNoGeral=populacao[melhor];
     }
 
     // Método auxiliar para gerar uma sequência numérica de Fibonacci para o cálculo de aptidão
