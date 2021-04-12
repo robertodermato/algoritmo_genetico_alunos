@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 
@@ -31,13 +32,15 @@ public class GeneticAlgorithmStudents {
 
     private static CrossoverOBX crossoverOBX;
 
+    private static int [] sequencia;
+
 
     //
     public GeneticAlgorithmStudents(int tamanhoDaTurmaRecebido, Integer [][] preferenciasTurmaArecebido, Integer [][] preferenciasTurmaBrecebido,
                                     int quantidadeDeCromossomosRecebida, double taxaDeIndviduosDaPopulacaoQueSofreraoCrossoverRecebido,
                                     double taxaDeGenesQueSofreraoCrossoverRecebida, double porcentagemDeCromossomosQueVaiSofrerMutacaoRecebida,
                                     double porcentagemDeGenesQueVaoSofrerMutacaoRecebida, int geracoesParaRodarRecebida,
-                                    int pararAposXGeracoesRepetindoResultadosRecebido, int nivelDeVerbosidaderecebido){
+                                    int pararAposXGeracoesRepetindoResultadosRecebido, int nivelDeVerbosidaderecebido, int opcaoDeSequencia){
 
         // Inicializando variáveis da população
         quantidadeDeCromossomos = quantidadeDeCromossomosRecebida;
@@ -74,7 +77,16 @@ public class GeneticAlgorithmStudents {
         // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
         crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
 
-        //primos();
+        // Sequências usadas
+        if (opcaoDeSequencia==0) sequencia = apenasUns();
+        if (opcaoDeSequencia==1) sequencia = primos();
+        if (opcaoDeSequencia==2) sequencia = primosDiv2();
+        if (opcaoDeSequencia==3) sequencia = fibonacci();
+        if (opcaoDeSequencia==4) sequencia = potenciasDe2();
+        if (opcaoDeSequencia==5) sequencia = inverteSequencia (primos());
+        if (opcaoDeSequencia==6) sequencia = inverteSequencia(primosDiv2());
+        if (opcaoDeSequencia==7) sequencia = inverteSequencia(fibonacci());
+        if (opcaoDeSequencia==8) sequencia = inverteSequencia(potenciasDe2());
     }
 
     public static void runGenerations() {
@@ -404,21 +416,21 @@ public class GeneticAlgorithmStudents {
     }
 
     // Método auxiliar para gerar uma sequência numérica de Fibonacci para o cálculo de aptidão
-    public static int fibonacci (int termo){
-        int [] memo = new int[termo+1];
+    public static int [] fibonacci (){
+        int [] fibonacci = new int[tamanhoDaTurma];
 
-        memo[0]=1;
-        memo[1]=2;
-        memo[2]=3;
+        fibonacci[0]=0;
+        fibonacci[1]=1;
+        fibonacci[2]=2;
 
-        for (int i=2; i<=termo;i++){
-            memo[i]=memo[i-1]+memo[i-2];
+        for (int i=3; i<tamanhoDaTurma;i++){
+            fibonacci[i]=fibonacci[i-1]+fibonacci[i-2];
         }
-        return memo[termo];
+        return fibonacci;
     }
 
-    // Método auxiliar para gerar uma sequência numérica de números primos divididos por 2 para o cálculo de aptidão
-    public static void primosDiv2 () {
+    // Método auxiliar para gerar uma sequência numérica de números primos para o cálculo de aptidão
+    public static int [] primos () {
         int [] primos = new int [tamanhoDaTurma];
         int maximo = Integer.MAX_VALUE;
         primos[0]=0;
@@ -433,16 +445,73 @@ public class GeneticAlgorithmStudents {
                 if(i%num==0) counter = counter + 1;
             }
             if (counter ==2) {
-                primos [indicePrimos] = (int) Math.ceil(i/2);
+                primos [indicePrimos] = i;
                 indicePrimos++;
                 if (indicePrimos==tamanhoDaTurma) break;
             }
         }
+        return primos;
+    }
 
-        System.out.println("Prime numbers from 1 to 100 are :");
-        for (int j=0; j<primos.length; j++){
-            System.out.println("primo " + j + ": " + primos[j] + ", ");
+    // Método auxiliar para gerar uma sequência numérica de números primos divididos por 2 para o cálculo de aptidão
+    public static int [] primosDiv2 () {
+        int [] primosDivididoPor2 = new int [tamanhoDaTurma];
+        int maximo = Integer.MAX_VALUE;
+        primosDivididoPor2[0]=0;
+
+        int indicePrimos = 1;
+        int i =0;
+        int num =0;
+
+        for (i = 3; i <= maximo; i++) {
+            int counter=0;
+            for(num =i; num>=1; num--) {
+                if(i%num==0) counter = counter + 1;
+            }
+            if (counter ==2) {
+                primosDivididoPor2 [indicePrimos] = (int) Math.ceil(i/2);
+                indicePrimos++;
+                if (indicePrimos==tamanhoDaTurma) break;
+            }
         }
+        return primosDivididoPor2;
+    }
+
+    // Método auxiliar para gerar uma sequência numérica de potências de 2 para o cálculo de aptidão
+    private static int [] potenciasDe2 (){
+        int [] potenciasDe2 = new int [tamanhoDaTurma];
+        potenciasDe2[0]=0;
+        for (int i=1; i<tamanhoDaTurma; i++){
+            potenciasDe2[i] = (int) Math.pow(2,i);
+        }
+        return potenciasDe2;
+    }
+
+    // Método auxiliar para gerar uma sequência numérica de números 1 para o cálculo de aptidão
+    private static int [] apenasUns (){
+        int [] apenasUns = new int [tamanhoDaTurma];
+        apenasUns[0]=0;
+        for (int i=1; i<tamanhoDaTurma; i++){
+            apenasUns[i] = 1;
+        }
+        return apenasUns;
+    }
+
+    private static void printSequencia (int [] sequencia){
+        System.out.println("========= Sequência =========");
+        System.out.println(Arrays.toString(sequencia));
+        //for (int i=0; i < sequencia.length; i++){
+        //    System.out.print(sequencia[i] + " ");
+        //}
+    }
+
+    private static int [] inverteSequencia (int[] sequenciaASerInvertida){
+        for(int i=0; i<sequenciaASerInvertida.length/2; i++){
+            int temp = sequenciaASerInvertida[i];
+            sequenciaASerInvertida[i] = sequenciaASerInvertida[sequenciaASerInvertida.length -i -1];
+            sequenciaASerInvertida[sequenciaASerInvertida.length -i -1] = temp;
+        }
+        return sequenciaASerInvertida;
     }
 }
 

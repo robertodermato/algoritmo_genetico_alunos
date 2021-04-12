@@ -31,6 +31,8 @@ public class App {
 
     private static int nivelDeVerbosidade;
 
+    private static int opcaoDeSequencia;
+
     // Construtor. Defina as variáveis aqui
     public App(String arquivo) {
         readSource(arquivo);
@@ -48,6 +50,9 @@ public class App {
 
         geracoesParaRodar = tamanhoDaTurma*100;
         pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
+
+        opcaoDeSequencia = 1;
+
     }
 
     public void run() {
@@ -107,7 +112,7 @@ public class App {
         algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
                 quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
                 porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
-                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade);
+                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade, opcaoDeSequencia);
 
         algoritmoEStudantes.runGenerations();
     }
