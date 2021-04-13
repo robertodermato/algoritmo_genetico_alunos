@@ -72,6 +72,7 @@ public class App {
             System.out.println("2 - Ver a evolução das gerações");
             System.out.println("3 - Ver a execução passo a passo");
             System.out.println("4 - Ver a execução ultra detalhada");
+            System.out.println("5 - Rodar planetas");
             System.out.println("0 - sair\n");
 
             try{       // Impede que usuário digite letra
@@ -105,6 +106,11 @@ public class App {
                     geraErodaOAlgoritmo();
                     break;
 
+                case 5 :
+                    nivelDeVerbosidade = 0;
+                    geraErodaPlanetas();
+                    break;
+
                 case 0:     // Sai do menu, encerra programa
                     break;
 
@@ -121,6 +127,15 @@ public class App {
                 pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade, opcaoDeSequencia);
 
         algoritmoEStudantes.runGenerations();
+    }
+
+    private void geraErodaPlanetas(){
+        algoritmoEStudantes = new GeneticAlgorithmStudents(tamanhoDaTurma, preferenciasTurmaA, preferenciasTurmaB,
+                quantidadeDeCromossomos, taxaDeCromossomosQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover,
+                porcentagemDeCromossomosQueVaiSofrerMutacao, porcentagemDeGenesQueVaoSofrerMutacao, geracoesParaRodar,
+                pararAposXGeracoesRepetindoResultados, nivelDeVerbosidade, opcaoDeSequencia);
+
+        algoritmoEStudantes.runPlanets();
     }
 
     /**

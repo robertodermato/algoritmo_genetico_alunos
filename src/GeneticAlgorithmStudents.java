@@ -430,6 +430,53 @@ public class GeneticAlgorithmStudents {
         melhorNoGeral=populacao[melhor];
     }
 
+    //
+    //
+    // planetas
+    //
+    //
+
+    public static void runPlanets(){
+        Integer [][] planetas = new Integer [quantidadeDeCromossomos][tamanhoDaTurma+1];
+        for (int i=0; i<planetas.length;i++){
+            // Criando a população inicial
+            criaPopulacaoInicial();
+
+            // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
+            crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
+            planetas[i]=runGenerations();
+            System.out.println("Planetas " + i + ": " + Arrays.toString(planetas[i]));
+        }
+
+        System.out.println("======================================");
+        System.out.println("============== Planetas ==============");
+        System.out.println("======================================");
+
+        for (int i=0; i<planetas.length; i++) {
+            System.out.println("Planetas " + i + ": " + Arrays.toString(planetas[i]));
+        }
+
+        int j = 0;
+        System.out.println(" ");
+        for (int i = 0; i < quantidadeDeCromossomos; i++) {
+            System.out.print("Cromossomo " + i + " - ");
+            for (j=0; j < tamanhoDaTurma; j++) {
+                System.out.print(planetas[i][j] + " ");
+            }
+            System.out.println("Aptidão: " + planetas[i][j]);
+        }
+
+        // Como estamos usando variáveis estáticas precisamos faer isso para transportar os valores da planetas
+        // para a população. simplesmente fazer populacao = planetas não funcionaria
+        for (int p=0; p<populacao.length; p++){
+            for (int q=0; q<populacao[0].length; q++){
+                populacao[p][q]=planetas[p][q];
+            }
+        }
+        runGenerations();
+    }
+
+
     // Método auxiliar para gerar uma sequência numérica de Fibonacci para o cálculo de aptidão
     public static int [] fibonacci (){
         int [] fibonacci = new int[tamanhoDaTurma];
