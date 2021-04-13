@@ -4,12 +4,12 @@ public class Main {
         // Escolha o nome do arquivo que deverá ser lido
 
         String arquivo;
-        //arquivo = "duplos4.txt"; // arquivo da professora
+        arquivo = "duplos4.txt"; // arquivo da professora
         //arquivo = "duplos4idela.txt";
         //arquivo = "duplos9ideal.txt";
         //arquivo = "duplos10.txt"; // arquivo da professora
         //arquivo = "duplos10ideal.txt";
-        arquivo = "duplos20.txt"; // arquivo da professora
+        //arquivo = "duplos20.txt"; // arquivo da professora
         //arquivo = "duplos20ideal.txt";
         //arquivo = "duplos50.txt"; // arquivo da professora
         //arquivo = "duplos50ideal.txt";

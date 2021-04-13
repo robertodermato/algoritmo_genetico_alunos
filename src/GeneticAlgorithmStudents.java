@@ -438,13 +438,17 @@ public class GeneticAlgorithmStudents {
 
     public static void runPlanets(){
         Integer [][] planetas = new Integer [quantidadeDeCromossomos][tamanhoDaTurma+1];
+        Integer temp [] = new Integer[tamanhoDaTurma+1];
         for (int i=0; i<planetas.length;i++){
             // Criando a população inicial
             criaPopulacaoInicial();
 
             // Inicializando o Crossover. Numa futura versão pode-se usar outros tipos de crossover aqui
             crossoverOBX = new CrossoverOBX(taxaDeIndviduosDaPopulacaoQueSofreraoCrossover, taxaDeGenesQueSofreraoCrossover, populacao, nivelDeVerbosidade);
-            planetas[i]=runGenerations();
+            temp=runGenerations();
+            for (int j=0; j<temp.length; j++){
+                planetas[i][j]=temp[j];
+            }
             System.out.println("Planetas " + i + ": " + Arrays.toString(planetas[i]));
         }
 
