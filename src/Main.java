@@ -11,9 +11,9 @@ public class Main {
         //arquivo = "duplos10ideal.txt";
         //arquivo = "duplos20.txt"; // arquivo da professora
         //arquivo = "duplos20ideal.txt";
-        //arquivo = "duplos50.txt"; // arquivo da professora
+        arquivo = "duplos50.txt"; // arquivo da professora
         //arquivo = "duplos50ideal.txt";
-        arquivo = "duplos100ideal.txt";
+        //arquivo = "duplos100ideal.txt";
         //arquivo = "duplos250ideal.txt";
 
         // Essas sequências estão implementadas a titulo de curiosidade, pois parecem ser mais ineficazes

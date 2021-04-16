@@ -85,7 +85,7 @@ public class GeneticAlgorithmStudents {
         if (opcaoDeSequencia==7) sequencia = escalaSequenciaInvertida(fibonacci());
         if (opcaoDeSequencia==8) sequencia = escalaSequenciaInvertida(potenciasDe2());
         if (opcaoDeSequencia==9) sequencia = inteirosComOdioNoFinal();
-        if (nivelDeVerbosidade>=0) {
+        if (nivelDeVerbosidade>1) {
             System.out.println("Sequência usada como máscara para cálculo da aptidão");
             printSequencia(sequencia);
         }
@@ -457,14 +457,16 @@ public class GeneticAlgorithmStudents {
         System.out.println("============== Planetas ==============");
         System.out.println("======================================");
 
+        /*
         for (int i=0; i<planetas.length; i++) {
             System.out.println("Planetas " + i + ": " + Arrays.toString(planetas[i]));
         }
+         */
 
         int j = 0;
         System.out.println(" ");
         for (int i = 0; i < quantidadeDeCromossomos; i++) {
-            System.out.print("Cromossomo " + i + " - ");
+            System.out.print("Planeta " + i + " - ");
             for (j=0; j < tamanhoDaTurma; j++) {
                 System.out.print(planetas[i][j] + " ");
             }
@@ -478,7 +480,7 @@ public class GeneticAlgorithmStudents {
                 populacao[p][q]=planetas[p][q];
             }
         }
-        nivelDeVerbosidade=1;
+        nivelDeVerbosidade=0;
         taxaDeGenesQueSofreraoCrossover = 0;
         porcentagemDeCromossomosQueVaiSofrerMutacao = 1;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.01;
@@ -574,11 +576,11 @@ public class GeneticAlgorithmStudents {
             inteiros[i] = i;
         }
 
-        int piores10porCento = (int) Math.ceil(tamanhoDaTurma*0.6);
-        System.out.println("25 por cento = " + piores10porCento);
+        int piores60porCento = (int) Math.ceil(tamanhoDaTurma*0.6);
+        //System.out.println("60 por cento = " + piores60porCento);
 
         //Aumenta o valor dos piores 10%
-        for (int i=0; i<piores10porCento; i++){
+        for (int i=0; i<piores60porCento; i++){
             inteiros [tamanhoDaTurma-1-i] = inteiros[tamanhoDaTurma-1-i] * 100;
         }
 
