@@ -84,7 +84,8 @@ public class GeneticAlgorithmStudents {
         if (opcaoDeSequencia==6) sequencia = escalaSequenciaInvertida(primosDiv2());
         if (opcaoDeSequencia==7) sequencia = escalaSequenciaInvertida(fibonacci());
         if (opcaoDeSequencia==8) sequencia = escalaSequenciaInvertida(potenciasDe2());
-        if (nivelDeVerbosidade>2) {
+        if (opcaoDeSequencia==9) sequencia = inteirosComOdioNoFinal();
+        if (nivelDeVerbosidade>=0) {
             System.out.println("Sequência usada como máscara para cálculo da aptidão");
             printSequencia(sequencia);
         }
@@ -477,6 +478,10 @@ public class GeneticAlgorithmStudents {
                 populacao[p][q]=planetas[p][q];
             }
         }
+        nivelDeVerbosidade=1;
+        taxaDeGenesQueSofreraoCrossover = 0;
+        porcentagemDeCromossomosQueVaiSofrerMutacao = 1;
+        porcentagemDeGenesQueVaoSofrerMutacao = 0.01;
         runGenerations();
     }
 
@@ -561,6 +566,25 @@ public class GeneticAlgorithmStudents {
         }
         return inteiros;
     }
+
+    // Método auxiliar para gerar uma sequência numérica de números 1 para o cálculo de aptidão
+    private static int [] inteirosComOdioNoFinal (){
+        int [] inteiros = new int [tamanhoDaTurma];
+        for (int i=0; i<tamanhoDaTurma; i++){
+            inteiros[i] = i;
+        }
+
+        int piores10porCento = (int) Math.ceil(tamanhoDaTurma*0.6);
+        System.out.println("25 por cento = " + piores10porCento);
+
+        //Aumenta o valor dos piores 10%
+        for (int i=0; i<piores10porCento; i++){
+            inteiros [tamanhoDaTurma-1-i] = inteiros[tamanhoDaTurma-1-i] * 100;
+        }
+
+        return inteiros;
+    }
+
 
     private static void printSequencia (int [] sequencia){
         System.out.println("========= Sequência =========");

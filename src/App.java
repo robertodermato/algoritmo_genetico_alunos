@@ -38,7 +38,7 @@ public class App {
         readSource(arquivo);
 
         // para 100: 100 cromossomos, 0.001 de mutação genes e 0,1 mutação cromossomos, 0.2 de crossover, 15mil gerações
-        quantidadeDeCromossomos = tamanhoDaTurma*50;
+        quantidadeDeCromossomos = tamanhoDaTurma;
 
         //Essa taxa não está sendo usada
         taxaDeCromossomosQueSofreraoCrossover = 0.8;
@@ -48,7 +48,7 @@ public class App {
         porcentagemDeCromossomosQueVaiSofrerMutacao = 0.05;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.001;
 
-        geracoesParaRodar = tamanhoDaTurma*300;
+        geracoesParaRodar = tamanhoDaTurma*1000;
         pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
 
         opcaoDeSequencia = opcaoDeSequenciaRecebido;
