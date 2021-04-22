@@ -429,6 +429,80 @@ public class GeneticAlgorithmStudents {
             System.out.println("Aluno A" + (i+1) + " com Aluno B" + (populacao[melhor][i]+1));
         }
         melhorNoGeral=populacao[melhor];
+        mostraPioresParesDeAlunos(melhor);
+    }
+
+    public static void mostraPioresParesDeAlunos(int melhor){
+        int soma = 0;
+        int posicaoDePreferenciaDoAluno;
+        int valorDaPreferencia;
+        int piorAptidao = 0;
+        int piorPreferencia = 0;
+        int posicaoMaisTriste=0;
+
+        //descobre qual pior dupla e qual aluno que tem o que mais odeia, na pior posição de preferência
+        for(int i = 0; i < tamanhoDaTurma; i++){
+            //Vê as posições de preferências nas turma A
+            posicaoDePreferenciaDoAluno = indexOf(populacao[melhor][i], preferenciasTurmaA[i]);
+            //System.out.println("posição da preferencia do aluno " + populacao[x][i] + " da turma B para o aluno A" + i + " é: " + posicaoDePreferenciaDoAluno);
+            valorDaPreferencia = sequencia[posicaoDePreferenciaDoAluno];
+            soma = soma + valorDaPreferencia;
+
+            if (valorDaPreferencia > piorPreferencia) piorPreferencia = valorDaPreferencia;
+
+            //Vê as posições de preferências nas turma B
+            posicaoDePreferenciaDoAluno = indexOf(i, preferenciasTurmaB[populacao[melhor][i]]);
+            //System.out.println("posição da preferencia do aluno " + i + " da turma A para o aluno B" + populacao[x][i] + " é: " + posicaoDePreferenciaDoAluno);
+            valorDaPreferencia = sequencia[posicaoDePreferenciaDoAluno];
+            soma = soma + valorDaPreferencia;
+
+            if (valorDaPreferencia > piorPreferencia) piorPreferencia = valorDaPreferencia;
+
+            if (soma > piorAptidao) piorAptidao=soma;
+            soma =0;
+        }
+
+        soma=0;
+        int quantidadeDeDuplasComPiorAptidao=0;
+        String duplasComPiorAptidao = "A(s) dupla(s) com pior aptidão é(são): ";
+        String alunoMaisTriste = "O(s) aluno(s) mais triste(s) é(são) o: ";
+        // conta quantas duplas são piores
+        for(int i = 0; i < tamanhoDaTurma; i++){
+            //Vê as posições de preferências nas turma A
+            posicaoDePreferenciaDoAluno = indexOf(populacao[melhor][i], preferenciasTurmaA[i]);
+            //System.out.println("posição da preferencia do aluno " + populacao[x][i] + " da turma B para o aluno A" + i + " é: " + posicaoDePreferenciaDoAluno);
+            valorDaPreferencia = sequencia[posicaoDePreferenciaDoAluno];
+            soma = soma + valorDaPreferencia;
+
+            if (valorDaPreferencia == piorPreferencia){
+                alunoMaisTriste = alunoMaisTriste + "A" + (i+1) + " ";
+                posicaoMaisTriste = posicaoDePreferenciaDoAluno+1;
+            }
+
+            //Vê as posições de preferências nas turma B
+            posicaoDePreferenciaDoAluno = indexOf(i, preferenciasTurmaB[populacao[melhor][i]]);
+            //System.out.println("posição da preferencia do aluno " + i + " da turma A para o aluno B" + populacao[x][i] + " é: " + posicaoDePreferenciaDoAluno);
+            valorDaPreferencia = sequencia[posicaoDePreferenciaDoAluno];
+            soma = soma + valorDaPreferencia;
+
+            if (valorDaPreferencia == piorPreferencia){
+                alunoMaisTriste = alunoMaisTriste + "B" + (populacao[melhor][i]+1) + " ";
+                posicaoMaisTriste = posicaoDePreferenciaDoAluno+1;
+            }
+
+            if (soma == piorAptidao) {
+                quantidadeDeDuplasComPiorAptidao ++;
+                duplasComPiorAptidao = duplasComPiorAptidao + "A" + (i+1) + " com B" + (populacao[melhor][i]+1);
+            }
+
+            soma=0;
+        }
+
+        if (piorAptidao>0) {
+            System.out.println(duplasComPiorAptidao);
+            System.out.println(alunoMaisTriste + ", pois fez(fizeram) dupla com a aluno que está na " + posicaoMaisTriste + " posição da sua lista de preferência.");
+        }
+
     }
 
     //
