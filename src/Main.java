@@ -8,10 +8,10 @@ public class Main {
         //arquivo = "duplos4idela.txt";
         //arquivo = "duplos9ideal.txt";
         //arquivo = "duplos10.txt"; // arquivo da professora
-        //arquivo = "duplos10ideal.txt";
+        arquivo = "duplos10ideal.txt";
         //arquivo = "duplos20.txt"; // arquivo da professora
         //arquivo = "duplos20ideal.txt";
-        arquivo = "duplos50.txt"; // arquivo da professora
+        //arquivo = "duplos50.txt"; // arquivo da professora
         //arquivo = "duplos50ideal.txt";
         //arquivo = "duplos100ideal.txt";
         //arquivo = "duplos250ideal.txt";
@@ -20,7 +20,7 @@ public class Main {
         // que a sequência de números inteiros, que é a opção 0, portanto recomenda-se não mudar esse parâmetro
 
         int opcaoDeSequencia;
-        opcaoDeSequencia=9; // inteiros
+        opcaoDeSequencia=0; // inteiros
         //opcaoDeSequencia=1; // primos
         //opcaoDeSequencia=2; // primos divididos por 2
         //opcaoDeSequencia=3; // fibonacci

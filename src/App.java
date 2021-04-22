@@ -33,6 +33,12 @@ public class App {
 
     private static int opcaoDeSequencia;
 
+    // variáveis do simulated annealing
+    private double temperatura;
+    private double taxaDeResfriamento;
+    private int iteracoes;
+
+
     // Construtor. Defina as variáveis aqui
     public App(String arquivo, int opcaoDeSequenciaRecebido) {
         readSource(arquivo);
@@ -52,6 +58,11 @@ public class App {
         pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
 
         opcaoDeSequencia = opcaoDeSequenciaRecebido;
+
+        // variáveis do simulated annealing
+        temperatura = 10000;
+        taxaDeResfriamento = 0.005;
+        iteracoes = tamanhoDaTurma * 1000;
 
     }
 
@@ -73,6 +84,7 @@ public class App {
             System.out.println("3 - Ver a execução passo a passo");
             System.out.println("4 - Ver a execução ultra detalhada");
             System.out.println("5 - Rodar planetas");
+            System.out.println("6 - Resolver com Simulated Annealing");
             System.out.println("0 - sair\n");
 
             try{       // Impede que usuário digite letra
@@ -110,6 +122,11 @@ public class App {
                     nivelDeVerbosidade = 0;
                     geraErodaPlanetas();
                     break;
+
+                case 6:
+                    SimulatedAnnealing algSimulatedAnnealing = new SimulatedAnnealing(preferenciasTurmaA, preferenciasTurmaB, tamanhoDaTurma,
+                            temperatura, taxaDeResfriamento, iteracoes);
+                    algSimulatedAnnealing.runAlgoritmo();
 
                 case 0:     // Sai do menu, encerra programa
                     break;
