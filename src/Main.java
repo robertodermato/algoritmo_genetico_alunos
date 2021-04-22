@@ -20,7 +20,7 @@ public class Main {
         // que a sequência de números inteiros, que é a opção 0, portanto recomenda-se não mudar esse parâmetro
 
         int opcaoDeSequencia;
-        opcaoDeSequencia=9; // inteiros
+        opcaoDeSequencia=0; // inteiros
         //opcaoDeSequencia=1; // primos
         //opcaoDeSequencia=2; // primos divididos por 2
         //opcaoDeSequencia=3; // fibonacci

@@ -54,7 +54,7 @@ public class App {
         porcentagemDeCromossomosQueVaiSofrerMutacao = 0.05;
         porcentagemDeGenesQueVaoSofrerMutacao = 0.001;
 
-        geracoesParaRodar = tamanhoDaTurma*1000;
+        geracoesParaRodar = tamanhoDaTurma*100;
         pararAposXGeracoesRepetindoResultados = tamanhoDaTurma*30;
 
         opcaoDeSequencia = opcaoDeSequenciaRecebido;
